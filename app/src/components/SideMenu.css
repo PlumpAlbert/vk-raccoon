@@ -1,0 +1,14 @@
+.side-menu {
+  display: inline-block;
+  height: 100%;
+}
+
+.menu-entry {
+  background: hsl(210, 100%, 95%);
+  color: hsl(220, 50%, 30%);
+}
+
+.active {
+  background: hsl(210, 100%, 70%);
+  color: white;
+}
