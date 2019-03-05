@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
+
 if (process.env.NODE_ENV === "development") {
   const debug = require("electron-debug");
   debug({ devToolsMode: "undocked" });

@@ -2,28 +2,29 @@ import React from "react";
 import { connect, MapStateToProps, MergeProps, MapDispatchToPropsFunction } from "react-redux";
 import { ApplicationState } from "../store";
 import { Pages, changePage } from "../store/main";
-import "./SideMenu.css";
+import "./css/SideMenu.css";
 
-interface TStateProps {
+interface TOwnProps {
   prevPage: Pages;
 }
 interface TDispatchProps {
   activatePage: (newPage: Pages) => void;
 }
-type ComponentProps = TStateProps &
+export type SideMenuProps = TOwnProps &
   TDispatchProps & {
     onMenuItemClick: React.EventHandler<React.MouseEvent<HTMLDivElement>>;
   };
 
-const mapStateToProps: MapStateToProps<TStateProps, {}, ApplicationState> = state => ({
-  prevPage: state.mainState.activePage
+const mapDispatchToProps: MapDispatchToPropsFunction<TDispatchProps, TOwnProps> = (dispatch, { prevPage }) => ({
+  activatePage: newPage => dispatch(changePage(newPage)),
+  prevPage
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<TDispatchProps, {}> = dispatch => ({
-  activatePage: newPage => dispatch(changePage(newPage))
-});
-
-const mergeProps: MergeProps<TStateProps, TDispatchProps, {}, ComponentProps> = ({ prevPage }, { activatePage }) => ({
+const mergeProps: MergeProps<{}, TDispatchProps, TOwnProps, SideMenuProps> = (
+  state,
+  { activatePage },
+  { prevPage }
+) => ({
   prevPage,
   activatePage,
   onMenuItemClick: (e: React.MouseEvent<HTMLDivElement>) => {
@@ -42,7 +43,7 @@ const mergeProps: MergeProps<TStateProps, TDispatchProps, {}, ComponentProps> = 
   }
 });
 
-const SideMenu: React.FC<ComponentProps> = ({ onMenuItemClick }) => (
+export const SideMenu: React.FC<SideMenuProps> = ({ onMenuItemClick }) => (
   <div className='side-menu'>
     <div className='menu-entry' id='Home' onClick={onMenuItemClick}>
       Home
@@ -81,7 +82,7 @@ const SideMenu: React.FC<ComponentProps> = ({ onMenuItemClick }) => (
 );
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
   mergeProps
 )(SideMenu);
