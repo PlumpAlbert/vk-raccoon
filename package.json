@@ -11,12 +11,13 @@
     "concurrently": "^4.1.0",
     "electron": "^4.0.5",
     "electron-debug": "^2.1.0",
+    "electron-devtools-installer": "^2.2.4",
     "electron-react-devtools": "^0.5.3",
     "wait-on": "^3.2.0"
   },
   "scripts": {
     "start-react": "cd ./app && npm run start",
     "dev": "concurrently \"npm run start-react\" \"wait-on http://localhost:3000 && NODE_ENV=development electron .\"",
-    "test": "cd ./app && npm run test"
+    "debug-main": "NODE_ENV=development electron --inspect=5858 ."
   }
 }

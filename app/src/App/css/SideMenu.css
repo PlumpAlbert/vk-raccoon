@@ -1,13 +1,14 @@
 .side-menu {
   display: grid;
   height: 100%;
+  background: hsl(210, 100%, 95%);
+  color: hsl(220, 50%, 30%);
 }
 
 .menu-entry {
-  display: inline-block;
-  background: hsl(210, 100%, 95%);
-  color: hsl(220, 50%, 30%);
-  padding: 0px 10px;
+  display: grid;
+  align-content: center;
+  padding: 0 10px;
 }
 
 .active {
