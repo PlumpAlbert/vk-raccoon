@@ -1,5 +1,5 @@
 import React from "react";
-import { Pages } from "../store/main";
+import { Pages } from "../store/types";
 import Login from "../Login";
 
 type TOwnProps = {
