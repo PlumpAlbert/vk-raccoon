@@ -45,39 +45,17 @@ const mergeProps: MergeProps<{}, TDispatchProps, TOwnProps, SideMenuProps> = (
 
 export const SideMenu: React.FC<SideMenuProps> = ({ onMenuItemClick }) => (
   <div className='side-menu'>
-    <div className='menu-entry' id='Home' onClick={onMenuItemClick}>
-      Home
-    </div>
-    <div className='menu-entry' id='News' onClick={onMenuItemClick}>
-      News
-    </div>
-    <div className='menu-entry' id='Notifications' onClick={onMenuItemClick}>
-      Notifications
-    </div>
-    <div className='menu-entry' id='Messages' onClick={onMenuItemClick}>
-      Messages
-    </div>
-    <div className='menu-entry' id='Friends' onClick={onMenuItemClick}>
-      Friends
-    </div>
-    <div className='menu-entry' id='Groups' onClick={onMenuItemClick}>
-      Groups
-    </div>
-    <div className='menu-entry' id='Pictures' onClick={onMenuItemClick}>
-      Pictures
-    </div>
-    <div className='menu-entry' id='Videos' onClick={onMenuItemClick}>
-      Videos
-    </div>
-    <div className='menu-entry' id='Bookmarks' onClick={onMenuItemClick}>
-      Bookmarks
-    </div>
-    <div className='menu-entry' id='Documents' onClick={onMenuItemClick}>
-      Documents
-    </div>
-    <div className='menu-entry' id='Settings' onClick={onMenuItemClick}>
-      Settings
-    </div>
+    <span className='menu-entry fa fa-home' id='Home' onClick={onMenuItemClick} />
+    <span className='menu-entry fa fa-newspaper' id='News' onClick={onMenuItemClick} />
+    <span className='menu-entry fa fa-bell' id='Notifications' onClick={onMenuItemClick} />
+    <span className='menu-entry fa fa-envelope-open' id='Messages' onClick={onMenuItemClick} />
+    <span className='menu-entry fa fa-user' id='Friends' onClick={onMenuItemClick} />
+    <span className='menu-entry fa fa-users' id='Groups' onClick={onMenuItemClick} />
+    <span className='menu-entry fa fa-images' id='Pictures' onClick={onMenuItemClick} />
+    <span className='menu-entry fa fa-video' id='Videos' onClick={onMenuItemClick} />
+    <span className='menu-entry fa fa-bookmark' id='Bookmarks' onClick={onMenuItemClick} />
+    <span className='menu-entry fa fa-file' id='Documents' onClick={onMenuItemClick} />
+    <span className='menu-entry fa fa-cog' id='Settings' onClick={onMenuItemClick} />
   </div>
 );
 

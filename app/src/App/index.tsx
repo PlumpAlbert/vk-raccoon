@@ -2,8 +2,8 @@ import React from "react";
 import { connect, MapStateToProps } from "react-redux";
 import SideMenu from "./SideMenu";
 import ContentPresenter from "./ContentPresenter";
-import "./css/App.css";
 import { ApplicationState, Pages } from "../store/types";
+import "./css/App.css";
 
 type TStateProps = {
   activePage: Pages;
