@@ -23,9 +23,11 @@ async function getToken() {
     `var query = new URLSearchParams(location.hash.replace("#", "?"));
     query.get("access_token")`
   );
+  console.log("> Token:", token);
   if (mainWindow === null) return;
   if (token) mainWindow.webContents.send("token", token);
-  else mainWindow.webContents.send("token", "err");
+  secondaryWindow.close();
+  secondaryWindow = null;
 }
 
 async function giveAccess() {
@@ -51,11 +53,22 @@ app.once("ready", () => {
     webPreferences: { webSecurity: !isDev }
   });
   mainWindow.loadURL(isDev ? "http://localhost:3000" : require("path").join(__dirname, "app/build/index.html"));
+  mainWindow.webContents.once("did-finish-load", () => {
+    secondaryWindow = new BrowserWindow({
+      show: false,
+      webPreferences: { webSecurity: !isDev }
+    });
+    secondaryWindow.webContents.once("did-finish-load", giveAccess);
+    // Loading VK Auth page
+    secondaryWindow.loadURL(
+      "https://oauth.vk.com/authorize?client_id=6845379&redirect_uri=https://oauth.vk.com/blank.html&display=popup&scope=wall&response_type=token&v=5.92&state=raccoon&revoke=1"
+    );
+  });
   mainWindow.show();
 });
 
 ipcMain.on("login", async (e, { email, pass }) => {
-  // console.log(`Email: ${email};\nPass: ${pass}`);
+  // console.log(`> Email: ${email};\n> Pass: ${pass}`);
   if (secondaryWindow === null)
     secondaryWindow = new BrowserWindow({
       show: false,

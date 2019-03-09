@@ -1,13 +1,15 @@
 import React from "react";
-import "./style.css";
 import { connect, MapDispatchToProps } from "react-redux";
-import { setToken } from "../store/actions";
+import { setToken, changePage } from "../store/actions";
+import { Pages } from "../store/types";
+import "./style.css";
 
 type TState = {
   email: string;
   pass: string;
 };
 
+let { ipcRenderer } = (window as any).require("electron");
 export class Login extends React.Component<TDispatchProps, TState> {
   state: TState = {
     email: "",
@@ -15,14 +17,6 @@ export class Login extends React.Component<TDispatchProps, TState> {
   };
   onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let { ipcRenderer } = (window as any).require("electron");
-    ipcRenderer.once("token", (event: any, token: string) => {
-      if (token === "err") {
-        console.error("TOKEN IS NOT DEFINED");
-      } else {
-        this.props.changeToken(token);
-      }
-    });
     ipcRenderer.send("login", { email: this.state.email, pass: this.state.pass });
   };
   render() {
@@ -48,10 +42,12 @@ export class Login extends React.Component<TDispatchProps, TState> {
 
 interface TDispatchProps {
   changeToken: (token: string) => void;
+  changePage: (page: Pages) => void;
 }
 
 const mapDispatchToProps: MapDispatchToProps<TDispatchProps, {}> = dispatch => ({
-  changeToken: token => dispatch(setToken(token))
+  changeToken: token => dispatch(setToken(token)),
+  changePage: page => dispatch(changePage(page))
 });
 
 export default connect<{}, TDispatchProps, {}, TState>(
