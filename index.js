@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 
-const isDev = process.env.NODE_ENV !== "development";
+const isDev = process.env.NODE_ENV === "development";
 
 if (isDev) {
   const { default: installExtension, REDUX_DEVTOOLS } = require("electron-devtools-installer");
