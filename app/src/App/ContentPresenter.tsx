@@ -1,15 +1,23 @@
 import React from "react";
-import { Pages } from "../store/types";
+import { connect, MapStateToProps } from "react-redux";
+import { Pages, ApplicationState } from "../store/types";
 import Login from "../Login";
+import Home from "../Home";
 
 type TOwnProps = {
   activePage: Pages;
 };
 
-const ContentPresenter: React.FC<TOwnProps> = ({ activePage }) => {
+type TStateProps = {
+  token: string;
+};
+
+const ContentPresenter: React.FC<TOwnProps & TStateProps> = ({ activePage, token }) => {
   switch (activePage) {
     case Pages.Login:
       return <Login />;
+    case Pages.Home:
+      return <Home token={token} />;
     // case Pages.News:
     //   return <News />;
     // case Pages.Notifications:
@@ -35,4 +43,9 @@ const ContentPresenter: React.FC<TOwnProps> = ({ activePage }) => {
   }
 };
 
-export default ContentPresenter;
+const mapStateToProps: MapStateToProps<TStateProps, TOwnProps, ApplicationState> = ({ token }, ownProps) => ({
+  token,
+  ...ownProps
+});
+
+export default connect(mapStateToProps)(ContentPresenter);
