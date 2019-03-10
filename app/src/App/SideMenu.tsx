@@ -1,7 +1,7 @@
 import React from "react";
 import { connect, MergeProps, MapDispatchToPropsFunction } from "react-redux";
 import { Pages } from "../store/types";
-import { changePage } from "../store/actions";
+import { changePage } from "../store/application/actions";
 import "./css/SideMenu.css";
 
 interface TOwnProps {

@@ -3,7 +3,7 @@ import { createStore, AnyAction, Store } from "redux";
 import { Provider } from "react-redux";
 import { mount, ReactWrapper } from "enzyme";
 import { ApplicationState, Pages } from "../store/types";
-import { MainReducer } from "../store";
+import { MainReducer } from "../store/application";
 import ConnectedSideMenu from "../App/SideMenu";
 
 describe("Testing SideMenu", () => {

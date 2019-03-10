@@ -1,6 +1,6 @@
 import React from "react";
 import API from "../API";
-import { Sex } from "../API/types";
+import { Sex } from "../store/account/types";
 
 interface IProps {
   token: string;
@@ -17,7 +17,7 @@ export default class Home extends React.Component<IProps, IState> {
     sex: Sex.undefined,
     status: ""
   };
-  async componentDidMount() {
+  async componentWillMount() {
     let { first_name, maiden_name, last_name, sex, status } = await API.account.getProfileInfo(this.props.token);
     this.setState({
       name: `${first_name} ${maiden_name ? `(${maiden_name}) ` : ""}${last_name}`,

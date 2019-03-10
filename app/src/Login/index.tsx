@@ -1,6 +1,6 @@
 import React from "react";
 import { connect, MapDispatchToProps } from "react-redux";
-import { setToken, changePage } from "../store/actions";
+import { setToken, changePage } from "../store/application/actions";
 import { Pages } from "../store/types";
 import "./style.css";
 
