@@ -19,9 +19,9 @@ export enum Locale {
 }
 
 export enum ActionTypes {
-  changePage = "@@main/CHANGE_PAGE",
-  setToken = "@@main/SET_TOKEN",
-  changeLocale = "@@main/CHANGE_LOCALE"
+  changePage = "@@application/CHANGE_PAGE",
+  setToken = "@@application/SET_TOKEN",
+  changeLocale = "@@application/CHANGE_LOCALE"
 }
 
 export interface ApplicationState {

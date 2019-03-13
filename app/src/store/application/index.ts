@@ -1,6 +1,6 @@
 import { Reducer } from "redux";
 import { ApplicationState, ActionTypes, Pages, Locale } from "./types";
-import { TActions } from "./actions";
+import { TApplicationActions } from "./actions";
 
 const initialState: ApplicationState = {
   activePage: Pages.Login,
@@ -8,7 +8,7 @@ const initialState: ApplicationState = {
   locale: Locale.en
 };
 
-const reducer: Reducer<ApplicationState, TActions> = (state = initialState, action): ApplicationState => {
+const reducer: Reducer<ApplicationState, TApplicationActions> = (state = initialState, action): ApplicationState => {
   switch (action.type) {
     case ActionTypes.changePage:
       return { ...state, activePage: action.payload };

@@ -24,6 +24,6 @@ function createMethod<R, F>(name: string) {
 
 export default {
   account: {
-    getProfileInfo: createMethod<getProfileInfo.profileInfoResponse, never>("account.getProfileInfo")
+    getProfileInfo: createMethod<getProfileInfo.Response, never>("account.getProfileInfo")
   }
 };

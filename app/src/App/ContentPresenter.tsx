@@ -1,8 +1,8 @@
 import React from "react";
 import { connect, MapStateToProps } from "react-redux";
-import { Pages, ApplicationState } from "../store/types";
+import { Pages, ApplicationState } from "../store/application/types";
 import Login from "../Login";
-import Home from "../Home";
+import UserPage from "../Home";
 
 type TOwnProps = {
   activePage: Pages;
@@ -17,7 +17,7 @@ const ContentPresenter: React.FC<TOwnProps & TStateProps> = ({ activePage, token
     case Pages.Login:
       return <Login />;
     case Pages.Home:
-      return <Home token={token} />;
+      return <UserPage />;
     // case Pages.News:
     //   return <News />;
     // case Pages.Notifications:

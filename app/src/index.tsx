@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import App from "./App";
-import { MainReducer } from "./store/application";
+import MainReducer from "./store";
 import { setToken, changePage } from "./store/application/actions";
-import { Pages } from "./store/types";
+import { Pages } from "./store/application/types";
 import "./index.css";
 // import * as serviceWorker from "./serviceWorker";
 

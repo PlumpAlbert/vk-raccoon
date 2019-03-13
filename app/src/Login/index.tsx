@@ -1,7 +1,7 @@
 import React from "react";
 import { connect, MapDispatchToProps } from "react-redux";
 import { setToken, changePage } from "../store/application/actions";
-import { Pages } from "../store/types";
+import { Pages } from "../store/application/types";
 import "./style.css";
 
 type TState = {

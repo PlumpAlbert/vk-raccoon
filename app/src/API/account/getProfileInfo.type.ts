@@ -1,4 +1,4 @@
-import { Sex, IUser, Relation } from "../../store/account/types";
+import { Sex, IUser, RelationType } from "../../store/account/types";
 
 export interface RelationRequest {
   id: number;
@@ -44,7 +44,7 @@ export interface NameRequest {
 }
 
 /** Объект, описывающий профиль пользователя */
-export interface profileInfoResponse {
+export interface Response {
   /** Имя пользователя */
   first_name: string;
   /** Фамилия пользователя */
@@ -56,7 +56,7 @@ export interface profileInfoResponse {
   /** Пол */
   sex: Sex;
   /** Семейное положение */
-  relation: Relation;
+  relation: RelationType;
   /** Объект пользователя, с которым связано
    *  семейное положение (если есть) */
   relation_partner: IUser;
