@@ -1,51 +1,50 @@
 import React from "react";
 import { connect, MapStateToProps } from "react-redux";
-import { Pages, ApplicationState } from "../store/application/types";
+import { Pages } from "../store/application/types";
+import { IGlobalStore } from "../store";
 import Login from "../Login";
 import UserPage from "../Home";
 
-type TOwnProps = {
+type TStateProps = {
+  user_id: number;
+  token: string;
   activePage: Pages;
 };
 
-type TStateProps = {
-  token: string;
-};
-
-const ContentPresenter: React.FC<TOwnProps & TStateProps> = ({ activePage, token }) => {
+const ContentPresenter: React.FC<TStateProps> = ({ activePage, user_id, token }) => {
+  console.log("> ContentPresenter:", activePage);
   switch (activePage) {
     case Pages.Login:
       return <Login />;
     case Pages.Home:
-      return <UserPage />;
-    // case Pages.News:
-    //   return <News />;
-    // case Pages.Notifications:
-    //   return <Notifications />;
-    // case Pages.Messages:
-    //   return <Messages />;
-    // case Pages.Friends:
-    //   return <Friends />;
-    // case Pages.Groups:
-    //   return <Groups />;
-    // case Pages.Pictures:
-    //   return <Pictures />;
-    // case Pages.Videos:
-    //   return <Videos />;
-    // case Pages.Bookmarks:
-    //   return <Bookmarks />;
-    // case Pages.Documents:
-    //   return <Documents />;
-    // case Pages.Settings:
-    //   return <Settings />;
-    default:
+      return <UserPage user_id={user_id} />;
+    case Pages.News:
+      return <h1>STILL IN DEVELOPMENT</h1>;
+    case Pages.Notifications:
+      return <h1>STILL IN DEVELOPMENT</h1>;
+    case Pages.Messages:
+      return <h1>STILL IN DEVELOPMENT</h1>;
+    case Pages.Friends:
+      return <h1>STILL IN DEVELOPMENT</h1>;
+    case Pages.Groups:
+      return <h1>STILL IN DEVELOPMENT</h1>;
+    case Pages.Pictures:
+      return <h1>STILL IN DEVELOPMENT</h1>;
+    case Pages.Videos:
+      return <h1>STILL IN DEVELOPMENT</h1>;
+    case Pages.Bookmarks:
+      return <h1>STILL IN DEVELOPMENT</h1>;
+    case Pages.Documents:
+      return <h1>STILL IN DEVELOPMENT</h1>;
+    case Pages.Settings:
       return <h1>STILL IN DEVELOPMENT</h1>;
   }
 };
 
-const mapStateToProps: MapStateToProps<TStateProps, TOwnProps, ApplicationState> = ({ token }, ownProps) => ({
-  token,
-  ...ownProps
+const mapStateToProps: MapStateToProps<TStateProps, {}, IGlobalStore> = ({ app, user }) => ({
+  activePage: app.activePage,
+  token: app.token,
+  user_id: user.id
 });
 
 export default connect(mapStateToProps)(ContentPresenter);
