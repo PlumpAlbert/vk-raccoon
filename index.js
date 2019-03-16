@@ -11,6 +11,9 @@ if (isDev) {
 
   const debug = require("electron-debug");
   debug({ devToolsMode: "undocked" });
+  ipcMain.on("console", (e, msg) => {
+    console.log(msg);
+  });
 }
 
 var mainWindow,
