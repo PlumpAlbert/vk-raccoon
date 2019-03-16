@@ -1,13 +1,7 @@
-import { Sex, IUser, RelationType } from "../../store/account/types";
+import { RelationType, IUser, ICountry, ICity, Sex } from "../types/user";
+import { TMainParams, apiGet } from "../types";
 
-export interface RelationRequest {
-  id: number;
-  first_name: string;
-  last_name: string;
-  is_closed: boolean;
-  can_access_closed: boolean;
-}
-
+/** Отображение даты рождения */
 export enum BirthDateVisibility {
   /** Не показывать */
   hide = 0,
@@ -17,22 +11,28 @@ export enum BirthDateVisibility {
   show = 2
 }
 
-export interface Country {
+/** Интерфейс описывающий пользователей, которые указали,
+ *  что состоят в отношениях с текущим пользователем */
+export interface IRelationRequest {
+  /** Идентификатор пользователя */
   id: number;
-  title: string;
+  /** Имя пользователя */
+  first_name: string;
+  /** Фамилия пользователя */
+  last_name: string;
+  /**  */
+  is_closed: boolean;
+  can_access_closed: boolean;
 }
 
-export interface City {
-  id: number;
-  title: string;
-}
-
+/** Статус запроса на смену имени */
 export enum NameRequestStatus {
   processing = "processing",
   declined = "declined"
 }
 
-export interface NameRequest {
+/** Интерфейс запроса на смену имени */
+export interface INameRequest {
   /** Идентификатор заявки, необходимый для её отмены
    * (только если status равен processing) */
   id: number;
@@ -44,7 +44,7 @@ export interface NameRequest {
 }
 
 /** Объект, описывающий профиль пользователя */
-export interface Response {
+export interface IResponse {
   /** Имя пользователя */
   first_name: string;
   /** Фамилия пользователя */
@@ -67,7 +67,7 @@ export interface Response {
   /** Список объектов пользователей,
    * которые указали, что состоят в отношениях
    * с данным пользователем (если есть) */
-  relation_requests: RelationRequest[];
+  relation_requests: IRelationRequest[];
   /** Дата рождения пользователя, возвращается
    * в формате D.M.YYYY */
   bdate: string;
@@ -76,13 +76,15 @@ export interface Response {
   /** Название родного города */
   home_town: string;
   /** Страна */
-  country: Country;
+  country: ICountry;
   /** Город */
-  city: City;
+  city: ICity;
   /** Информация о заявке на смену имени, если она была подана */
-  name_request: NameRequest;
+  name_request: INameRequest;
   /** Статус пользователя */
   status: string;
   /** Номер телефона */
   phone: string;
 }
+
+export default (args: TMainParams) => apiGet<IResponse>("account.getProfileInfo", args.token);
