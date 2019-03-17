@@ -24,8 +24,8 @@ export enum ActionTypes {
   changeLocale = "@@application/CHANGE_LOCALE"
 }
 
-export interface ApplicationState {
-  readonly activePage: Pages;
-  readonly token: string;
-  readonly locale: Locale;
+export interface IApplicationState {
+  activePage: Pages;
+  token: string;
+  locale: Locale;
 }
