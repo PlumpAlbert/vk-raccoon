@@ -1,9 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
 import API from "../API";
-import { IUser, Sex } from "../API/types/user";
+import { IUser, Sex, FriendStatus } from "../API/types/user";
 import { MapStateToProps } from "react-redux";
 import { IGlobalStore } from "../store";
 import { connect } from "react-redux";
+
+import './UserPage.css';
 
 interface IOwnProps {
   user_id: number;
@@ -12,7 +14,7 @@ interface IStateProps {
   token: string;
 }
 
-interface IProps extends IOwnProps, IStateProps {}
+interface IProps extends IOwnProps, IStateProps { }
 
 class UserPage extends React.Component<IProps, IUser> {
   constructor(props: IProps) {
@@ -31,11 +33,17 @@ class UserPage extends React.Component<IProps, IUser> {
     API.users
       .get({
         token: this.props.token,
-        fields: ["sex", "status"],
+        fields: [
+          "friend_status",
+          "maiden_name",
+          "can_send_friend_request",
+          "can_write_private_message",
+          "status",
+          "photo_400_orig"
+        ],
         users: [this.props.user_id]
       })
       .then(users => {
-        console.log(users);
         self.setState(users[0]);
       });
   };
@@ -45,12 +53,37 @@ class UserPage extends React.Component<IProps, IUser> {
     if (prevProps.user_id !== this.props.user_id) this.loadUserInfo();
   };
   render() {
-    let { first_name, last_name, sex, status } = this.state;
+    let {
+      first_name,
+      last_name,
+      maiden_name,
+      photo_400_orig,
+      status,
+      can_write_private_message,
+      can_send_friend_request,
+      friend_status
+    } = this.state;
+    let friendButton = null;
+    if (friend_status) {
+      friendButton = <button> {
+        friend_status === FriendStatus.Friend ? "Remove from friend list" :
+          friend_status === FriendStatus.InRequest ? "In your friend list" : "Add to friend list"
+      } </button>;
+    }
     return (
-      <div className='home'>
-        <h1>{`${first_name} ${last_name}`}</h1>
-        <p>{sex ? Sex[sex] : ""}</p>
-        <a>{status}</a>
+      <div className='user'>
+        <div className="user-info">
+          <div className="user-wrapper">
+            <img src={photo_400_orig} alt="UserPhoto" />
+            <h1>{`${first_name} ${maiden_name ? `(${maiden_name}) ${last_name}` : last_name}`}</h1>
+            <blockquote>{status}</blockquote>
+            {can_write_private_message ? <button>Write Message</button> : null}
+            {can_send_friend_request || friend_status === FriendStatus.Friend ? friendButton : null}
+            {friend_status === FriendStatus.OutRequest ? <span>{first_name} sent you a friend request</span> : null}
+          </div>
+        </div>
+        <div className="user-content"></div>
+        <div className="user-counters"></div>
       </div>
     );
   }
