@@ -3,7 +3,7 @@ import { connect, MapStateToProps } from "react-redux";
 import { Pages } from "../store/application/types";
 import { IGlobalStore } from "../store";
 import Login from "../Login";
-import UserPage from "../Home";
+import UserPage from "../Home/UserPage";
 
 type TStateProps = {
   user_id: number;
@@ -17,7 +17,8 @@ const ContentPresenter: React.FC<TStateProps> = ({ activePage, user_id, token })
     case Pages.Login:
       return <Login />;
     case Pages.Home:
-      return <UserPage user_id={user_id} />;
+      let Page = UserPage(user_id, token);
+      return <Page />;
     case Pages.News:
       return <h1>STILL IN DEVELOPMENT</h1>;
     case Pages.Notifications:
