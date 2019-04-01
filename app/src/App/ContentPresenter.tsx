@@ -17,8 +17,7 @@ const ContentPresenter: React.FC<TStateProps> = ({ activePage, user_id, token })
     case Pages.Login:
       return <Login />;
     case Pages.Home:
-      let Page = UserPage(user_id, token);
-      return <Page />;
+      return UserPage(user_id, token);
     case Pages.News:
       return <h1>STILL IN DEVELOPMENT</h1>;
     case Pages.Notifications:

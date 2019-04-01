@@ -9,7 +9,7 @@ export default function UserPage(userId: number, token: string) {
     loaded: boolean,
     user: IUser | null
   }
-  return class UserPage extends React.Component<{}, TState> {
+  class UserPage extends React.Component<{}, TState> {
     state: TState = {
       loading: false,
       loaded: false,
@@ -45,4 +45,5 @@ export default function UserPage(userId: number, token: string) {
       )
     }
   }
+  return <UserPage />
 }
