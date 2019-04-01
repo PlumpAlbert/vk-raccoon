@@ -1,30 +1,42 @@
-import React from "react";
-import { createStore, AnyAction, Store } from "redux";
+import * as React from 'react'
+import SideMenu from '../App/SideMenu';
+import configureStore from 'redux-mock-store';
 import { Provider } from "react-redux";
-import { mount, ReactWrapper } from "enzyme";
-import { ApplicationState, Pages } from "../store/types";
-import { MainReducer } from "../store/application";
-import ConnectedSideMenu from "../App/SideMenu";
+import { mount } from "enzyme";
+import { Pages, Locale } from '../store/application/types';
+import { IGlobalStore } from '../store';
+import { changePage } from '../store/application/actions';
 
-describe("Testing SideMenu", () => {
-  let store: Store<ApplicationState, AnyAction>;
-  let wrapper: ReactWrapper;
+describe('> SideMenu', () => {
+  const initState: IGlobalStore = {
+    app: {
+      activePage: Pages.Login,
+      locale: Locale.en,
+      token: ''
+    },
+    user: {
+      id: 0,
+      name: '',
+      status: ''
+    }
+  }
+  const mockStore = configureStore<IGlobalStore, {}>();
 
-  beforeAll(() => {
-    store = createStore(MainReducer);
-    wrapper = mount(
+  const store = mockStore(initState),
+    container = mount(
       <Provider store={store}>
-        <ConnectedSideMenu prevPage={store.getState().activePage} />
+        <SideMenu />
       </Provider>
     );
-  });
 
-  it("should change item's active state", () => {
-    let sideMenu = wrapper.find("SideMenu");
-    let messagesItem = sideMenu.find("#Messages");
-    expect(store.getState().activePage).toBe(Pages.Login);
+  beforeEach(() => { store.clearActions(); });
+
+  it("++ should change item's active state", () => {
+    let messagesItem = container.find("#Settings");
+    expect(messagesItem.length).toBe(1);
     messagesItem.simulate("click");
-    expect(store.getState().activePage).toBe(Pages.Messages);
     expect(messagesItem.render().hasClass("active")).toBe(true);
+    let actions = store.getActions();
+    expect(actions[0]).toEqual(store.dispatch(changePage(Pages.Settings)));
   });
-});
+})

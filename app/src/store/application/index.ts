@@ -2,7 +2,7 @@ import { Reducer } from "redux";
 import { IApplicationState, ActionTypes, Pages, Locale } from "./types";
 import { TApplicationActions } from "./actions";
 
-const initialState: IApplicationState = {
+export const initialState: IApplicationState = {
   activePage: Pages.Login,
   token: "",
   locale: Locale.en

@@ -1,20 +1,20 @@
 import { TAccountActions } from "./actions";
 import { Reducer } from "redux";
-import { IHomeState, ActionConstants } from "./types";
+import { IAccountState, ActionTypes } from "./types";
 
-const initState: IHomeState = {
+export const initialState: IAccountState = {
   id: 0,
   name: "",
   status: ""
 };
 
-const reducer: Reducer<IHomeState, TAccountActions> = (state = initState, a) => {
+const reducer: Reducer<IAccountState, TAccountActions> = (state = initialState, a) => {
   switch (a.type) {
-    case ActionConstants.setUser:
+    case ActionTypes.setUser:
       let { name, id, status } = a.payload;
       return { id, name, status };
-    case ActionConstants.setStatus:
-      return { status: a.payload, ...state };
+    case ActionTypes.setStatus:
+      return { ...state, status: a.payload };
     default:
       return state;
   }
