@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "A modern client for VK social network",
   "main": "index.js",
-  "repository": "https://github.com/PlumpAlbert/vk-raccoon",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:PlumpAlbert/vk-raccoon.git"
+  },
   "author": "plump_albert",
   "license": "MIT",
   "private": true,
