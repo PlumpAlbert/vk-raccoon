@@ -10,11 +10,10 @@
 .user-info {
   display: flex;
   background: hsl(0, 0%, 99%);
-  flex: 1 1 0;
   min-width: 300px;
   flex-direction: column;
   align-content: center;
-  box-shadow: 4px 0 12px hsla(0, 0%, 80%, 0.3)
+  box-shadow: 4px 0 12px hsla(0, 0%, 80%, 0.4)
 }
 
 .user-wrapper {
@@ -71,10 +70,12 @@
   margin-block-end: 8px;
   background: hsl(0, 0%, 99%);
   color: inherit;
+  cursor: pointer;
 }
 
 .about {
   align-self: flex-start;
+  user-select: none;
   color: hsl(0, 0%, 50%);
   transition: color .1s ease-in;
 }
@@ -86,11 +87,11 @@
 
 .user-content {
   display: flex;
-  flex: 2.5 1 0
+  flex: 1;
+  overflow: auto;
 }
 
 .user-counters {
   display: flex;
   min-width: 258px;
-  flex: 1 1 0
 }

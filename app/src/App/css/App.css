@@ -1,5 +1,6 @@
 .app {
+  width: 100vw;
   height: 100vh;
-  display: grid;
-  grid-template-columns: max-content 5fr;
+  display: flex;
+  overflow: hidden;
 }
