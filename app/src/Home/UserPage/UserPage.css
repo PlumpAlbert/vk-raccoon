@@ -3,40 +3,85 @@
   flex-direction: row;
   width: 100%;
   height: 100%;
+  color: hsl(0, 0%, 24%);
+  line-height: 18px;
 }
 
 .user-info {
   display: flex;
+  background: hsl(0, 0%, 99%);
   flex: 1 1 0;
+  min-width: 360px;
   flex-direction: column;
-  padding: 10px;
-  justify-content: center;
+  align-content: center;
+  box-shadow: 4px 0 12px hsla(0, 0%, 80%, 0.3)
 }
 
 .user-wrapper {
+  margin: 24px;
   display: flex;
+  flex: 1;
   flex-direction: column;
-  font-family: 'Google Sans';
   align-items: center;
 }
 
 .user-wrapper > img {
-  width: 100%;
   height: auto;
+  width: 100%;
+  max-width: 200px;
+  border-radius: 100%;
 }
 
-.user-wrapper > h1 {
-  font-weight: 500
+.user-wrapper > h3 {
+  font-size: 16px;
+  font-weight: 400;
+  color: black;
+  margin-block-end: 0;
 }
 
 .user-wrapper > blockquote {
-  font-size: 12px;
+  position: relative;
+  width: calc(100% - 48px);
+  background-color: hsl(0, 0%, 95%);
+  color: hsl(0, 0%, 60%);
+  border-left: 3px solid black;
+  margin: 16px 0;
+  padding: 12px 24px;
+  line-height: 1.5;
+  font-style: italic
 }
 
-.user-wrapper > button {
-  border-radius: 5%;
-  border-color: red;
+.user-wrapper > blockquote::before {
+  content: '\201C';
+  font-size: 3em;
+  position: absolute;
+  left: 6px;
+  top: -6px;
+  color: black;
+}
+
+.action-btn {
+  width: 200px;
+  font-family: "Google Sans";
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid hsl(0, 0%, 90%);
   border-width: 1px;
+  padding: 8px 0;
+  margin-block-end: 8px;
+  background: hsl(0, 0%, 99%);
+  color: inherit;
+}
+
+.about {
+  align-self: flex-start;
+  color: hsl(0, 0%, 50%);
+  transition: color .1s ease-in;
+}
+
+.about:hover {
+  color: inherit;
+  cursor: pointer;
 }
 
 .user-content {
@@ -46,5 +91,6 @@
 
 .user-counters {
   display: flex;
+  max-width: 258px;
   flex: 1 1 0
 }
