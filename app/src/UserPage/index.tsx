@@ -1,6 +1,6 @@
 import React from 'react';
-import { IUser } from '../../API/types/user';
-import API from '../../API';
+import { IUser } from '../API/types/user';
+import API from '../API';
 import User from './User';
 
 export default function UserPage(userId: number, token: string) {

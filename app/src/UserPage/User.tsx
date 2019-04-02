@@ -1,5 +1,5 @@
 import React from "react";
-import { IUser, FriendStatus } from "../../API/types/user";
+import { IUser, FriendStatus } from "../API/types/user";
 
 import './UserPage.css';
 
