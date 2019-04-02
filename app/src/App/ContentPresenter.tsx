@@ -11,33 +11,37 @@ type TStateProps = {
   activePage: Pages;
 };
 
-const ContentPresenter: React.FC<TStateProps> = ({ activePage, user_id, token }) => {
-  console.log("> ContentPresenter:", activePage);
-  switch (activePage) {
-    case Pages.Login:
-      return <Login />;
-    case Pages.Home:
-      return UserPage(445367510, token);
-    case Pages.News:
-      return <h1>STILL IN DEVELOPMENT</h1>;
-    case Pages.Notifications:
-      return <h1>STILL IN DEVELOPMENT</h1>;
-    case Pages.Messages:
-      return <h1>STILL IN DEVELOPMENT</h1>;
-    case Pages.Friends:
-      return <h1>STILL IN DEVELOPMENT</h1>;
-    case Pages.Groups:
-      return <h1>STILL IN DEVELOPMENT</h1>;
-    case Pages.Pictures:
-      return <h1>STILL IN DEVELOPMENT</h1>;
-    case Pages.Videos:
-      return <h1>STILL IN DEVELOPMENT</h1>;
-    case Pages.Bookmarks:
-      return <h1>STILL IN DEVELOPMENT</h1>;
-    case Pages.Documents:
-      return <h1>STILL IN DEVELOPMENT</h1>;
-    case Pages.Settings:
-      return <h1>STILL IN DEVELOPMENT</h1>;
+class ContentPresenter extends React.Component<TStateProps> {
+  shouldComponentUpdate = (newProps: TStateProps) => newProps.activePage !== this.props.activePage;
+  render() {
+    let { activePage, user_id, token } = this.props;
+    console.log("> ContentPresenter:", activePage);
+    switch (activePage) {
+      case Pages.Login:
+        return <Login />;
+      case Pages.Home:
+        return UserPage(445367510, token);
+      case Pages.News:
+        return <h1>STILL IN DEVELOPMENT</h1>;
+      case Pages.Notifications:
+        return <h1>STILL IN DEVELOPMENT</h1>;
+      case Pages.Messages:
+        return <h1>STILL IN DEVELOPMENT</h1>;
+      case Pages.Friends:
+        return <h1>STILL IN DEVELOPMENT</h1>;
+      case Pages.Groups:
+        return <h1>STILL IN DEVELOPMENT</h1>;
+      case Pages.Pictures:
+        return <h1>STILL IN DEVELOPMENT</h1>;
+      case Pages.Videos:
+        return <h1>STILL IN DEVELOPMENT</h1>;
+      case Pages.Bookmarks:
+        return <h1>STILL IN DEVELOPMENT</h1>;
+      case Pages.Documents:
+        return <h1>STILL IN DEVELOPMENT</h1>;
+      case Pages.Settings:
+        return <h1>STILL IN DEVELOPMENT</h1>;
+    }
   }
 };
 
