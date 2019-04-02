@@ -1,0 +1,57 @@
+
+.post {
+  max-width: 550px;
+  height: max-content;
+  margin: 16px 24px;
+  background: white;
+  color: hsl(0, 0%, 5%);
+  box-shadow: 0 4px 8px hsla(0, 0%, 60%, .3);
+  line-height: 1.5rem;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px 0;
+}
+.post-header > img {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+.post-header-author {
+  margin: 0 14px;
+}
+.post-header-author > h1 {
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+}
+.post-header-author > p {
+  font-size: inherit;
+  color: hsl(0, 0%, 70%);
+  margin: 0;
+}
+
+
+.post-content {
+  margin: 8px 20px 0;
+}
+.post-content > p {
+  margin: 0;
+}
+
+.post-content-attachments {
+  padding: 8px 20px;
+}
+.post-content-attachments > * {
+  width: 100%;
+  display: flex;
+  flex: 1 1 0;
+  cursor: pointer;
+}
+
+.post-footer {
+  height: 50px;
+  background: hsl(0, 0%, 95%);
+}
