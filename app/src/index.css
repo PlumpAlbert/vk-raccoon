@@ -5,7 +5,8 @@ div#root {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands", "Courier Prime Sans";
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands", "Google Sans";
+  font-size: 12px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

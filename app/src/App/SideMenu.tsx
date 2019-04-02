@@ -28,7 +28,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<TDispatchProps, {}> = dispa
 const mergeProps: MergeProps<TStateProps, TDispatchProps, {}, SideMenuProps> = ({ prevPage }, { activatePage }) => ({
   prevPage,
   activatePage,
-  onMenuItemClick: function(e) {
+  onMenuItemClick: function (e) {
     // The element that user clicked on
     let newElement = e.target as HTMLElement;
     let newPage = Pages[newElement.id as keyof typeof Pages];
@@ -45,7 +45,7 @@ const mergeProps: MergeProps<TStateProps, TDispatchProps, {}, SideMenuProps> = (
 });
 
 export const SideMenu: React.FC<SideMenuProps> = ({ onMenuItemClick, prevPage }) => (
-  <div className='side-menu' style={prevPage === Pages.Login ? { alignItems: "flex-end" } : {}}>
+  <div className='side-menu' style={prevPage === Pages.Login ? { display: "none" } : undefined}>
     {prevPage !== Pages.Login && (
       <span
         className={`${prevPage === Pages.Home ? "active" : ""} menu-entry fa fa-home`}

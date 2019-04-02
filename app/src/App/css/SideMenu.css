@@ -1,21 +1,39 @@
 .side-menu {
-  display: grid;
-  height: 100%;
-  background: hsl(210, 100%, 95%);
-  color: hsl(220, 50%, 30%);
+  display: flex;
+  transition: width .25s ease-in, display .25s ease-in;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: flex-end;
+  width: 48px;
+  height: 100vh;
+  background: hsl(0, 0%, 95%);
+  color: hsl(0, 0%, 20%);
 }
 
 .menu-entry {
-  display: grid;
-  align-content: center;
-  padding: 10px;
+  transition: all .1s ease-in;
+  display: flex;
+  width: 100%;
+  flex: 1 1;
+  font-size: 24px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
 }
+
+.menu-entry:before {
+  transition: all .1s ease-in;
+}
+
 .menu-entry:hover {
-  color: hsl(210, 100%, 95%);
-  background: hsl(220, 50%, 30%);
+  transition: all .1s ease-in;
+  color: hsl(0, 0%, 95%);
+  background: hsl(0, 0%, 20%);
 }
 
 .active {
-  background: hsl(210, 100%, 70%);
+  transition: all .1s ease-in;
+  background: hsl(0, 0%, 50%);
   color: white;
 }
