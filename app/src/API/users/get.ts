@@ -31,5 +31,5 @@ export default (args: IParams) => {
     request.fields = args.fields.join(",");
   }
   request.name_case = args.name_case;
-  return apiGet<TResponse, IRequest>("users.get", args.token, request);
+  return apiGet<TResponse>("users.get", args.token, request);
 };

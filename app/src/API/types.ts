@@ -6,7 +6,7 @@ export type TMainParams = {
 };
 
 export async function apiGet<IResponse>(name: string, token: string): Promise<IResponse>;
-export async function apiGet<IResponse, IRequest>(name: string, token: string, fields: IRequest): Promise<IResponse>;
+export async function apiGet<IResponse>(name: string, token: string, fields: any): Promise<IResponse>;
 export async function apiGet<IResponse>(name: string, token: string, fields?: any) {
   let query = `?v=5.92&access_token=${token}`;
   if (fields) {
