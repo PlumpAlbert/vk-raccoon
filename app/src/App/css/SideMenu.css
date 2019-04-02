@@ -15,7 +15,9 @@
   transition: all .1s ease-in;
   display: flex;
   width: 100%;
-  flex: 1 1;
+  box-sizing: border-box;
+  min-height: 48px;
+  flex: 1 1 48px;
   font-size: 24px;
   justify-content: center;
   align-items: center;

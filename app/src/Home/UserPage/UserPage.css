@@ -11,7 +11,7 @@
   display: flex;
   background: hsl(0, 0%, 99%);
   flex: 1 1 0;
-  min-width: 360px;
+  min-width: 300px;
   flex-direction: column;
   align-content: center;
   box-shadow: 4px 0 12px hsla(0, 0%, 80%, 0.3)
@@ -91,6 +91,6 @@
 
 .user-counters {
   display: flex;
-  max-width: 258px;
+  min-width: 258px;
   flex: 1 1 0
 }

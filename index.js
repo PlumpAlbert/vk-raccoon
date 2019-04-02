@@ -51,8 +51,10 @@ async function giveAccess() {
 
 app.once("ready", () => {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    minWidth: 900,
+    minHeight: 528,
+    width: 1280,
+    height: 800,
     webPreferences: { webSecurity: !isDev }
   });
   mainWindow.loadURL(isDev ? "http://localhost:3000" : require("path").join(__dirname, "app/build/index.html"));
