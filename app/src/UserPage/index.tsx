@@ -41,7 +41,7 @@ export default function UserPage(userId: number, token: string) {
       return (
         loading
           ? <div>Loading...</div>
-          : user ? <User user={user}></User> : null
+          : user ? <User user={user} token={token}></User> : null
       )
     }
   }

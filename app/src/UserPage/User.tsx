@@ -2,13 +2,16 @@ import React from "react";
 import { IUser, FriendStatus } from "../API/types/user";
 
 import './UserPage.css';
+import Posts from "../Post";
 
 interface IProps {
   user: IUser;
+  token: string;
 }
 
 const User: React.FC<IProps> = props => {
   let {
+    id,
     first_name,
     last_name,
     maiden_name,
@@ -18,12 +21,14 @@ const User: React.FC<IProps> = props => {
     can_send_friend_request,
     friend_status
   } = props.user;
+
   let friendButton = null;
   if (friend_status) {
     friendButton = <button className='action-btn'> {
       friend_status === FriendStatus.Friend ? "Remove from friend list" : "Add to friend list"
     } </button>;
   }
+
   return (
     <div className='user'>
       <div className="user-info">
@@ -37,7 +42,9 @@ const User: React.FC<IProps> = props => {
           <span className="about">More information ></span>
         </div>
       </div>
-      <div className="user-content"></div>
+      <div className="user-content">
+        {Posts(props.token, id)}
+      </div>
       <div className="user-counters"></div>
     </div>
   );
