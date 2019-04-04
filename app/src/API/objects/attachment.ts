@@ -94,7 +94,7 @@ export interface IPrettyCardAttachment extends IPrettyCard, IAdditionalPropertie
 
 export interface IAttachment {
   readonly type: AttachmentType;
-  photos?: IPhotoAttachment;
+  photo?: IPhotoAttachment;
   posted_photo?: IPostedPhotoAttachment;
   video?: IVideoAttachment;
   audio?: IAudioAttachment;
