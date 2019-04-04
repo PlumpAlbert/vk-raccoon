@@ -1,6 +1,14 @@
+.user-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  overflow-y: auto;
+}
 
 .post {
-  max-width: 550px;
+  min-width: 500px;
+  width: auto;
   height: max-content;
   margin: 16px 24px;
   background: white;

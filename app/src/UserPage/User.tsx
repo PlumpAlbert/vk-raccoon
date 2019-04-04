@@ -1,5 +1,5 @@
 import React from "react";
-import { IUser, FriendStatus } from "../API/types/user";
+import { IUser, FriendStatus } from "../API/objects/user";
 
 import './UserPage.css';
 import Posts from "../Post";
@@ -42,9 +42,7 @@ const User: React.FC<IProps> = props => {
           <span className="about">More information ></span>
         </div>
       </div>
-      <div className="user-content">
-        {Posts(props.token, id)}
-      </div>
+      {Posts(props.token, props.user.id)}
       <div className="user-counters"></div>
     </div>
   );

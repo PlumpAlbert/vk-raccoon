@@ -34,7 +34,7 @@ const PostLoader = (token: string, userId?: number) => {
     render() {
       let { posts } = this.state;
       return (
-        <div>
+        <div className="user-content">
           {posts ? Post(posts) : 'Loading...'}
         </div>
       )

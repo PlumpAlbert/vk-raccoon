@@ -85,12 +85,6 @@
   cursor: pointer;
 }
 
-.user-content {
-  display: flex;
-  flex: 1;
-  overflow: auto;
-}
-
 .user-counters {
   display: flex;
   min-width: 258px;
