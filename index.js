@@ -51,8 +51,8 @@ async function giveAccess() {
 
 app.once("ready", () => {
   mainWindow = new BrowserWindow({
-    minWidth: 900,
-    minHeight: 528,
+    minWidth: 1000,
+    minHeight: 528 + 25,
     width: 1280,
     height: 800,
     webPreferences: { webSecurity: !isDev }
