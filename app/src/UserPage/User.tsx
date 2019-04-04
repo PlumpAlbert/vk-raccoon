@@ -43,7 +43,7 @@ const User: React.FC<IProps> = props => {
         </div>
       </div>
       {Posts(props.token, props.user.id)}
-      <div className="user-counters"></div>
+      {/* <div className="user-counters"></div> */}
     </div>
   );
 }
