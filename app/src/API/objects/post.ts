@@ -1,4 +1,5 @@
 import { Platform } from "./user";
+import { IAttachment } from "./attachment";
 
 /** Интерфейс, описывающий запись на стене пользователя или сообщества */
 export interface IPost {
@@ -34,7 +35,7 @@ export interface IPost {
   /** Информация о способе размещения записи */
   post_source?: IPostSource;
   /** Медиавложения записи (фотографии, ссылки и т.п.) */
-  attachments?: Array<object>;
+  attachments?: Array<IAttachment>;
   /** Информация о местоположении */
   geo?: IGeo;
   /** Идентификатор автора, если запись была опубликована от имени сообщества

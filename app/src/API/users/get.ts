@@ -1,4 +1,4 @@
-import { IUser, NameCase } from "../types/user";
+import { IUser, NameCase } from "../objects";
 import { apiGet, TMainParams } from "../types";
 
 export interface IParams extends TMainParams {

@@ -1,4 +1,4 @@
-import { RelationType, IUser, ICountry, ICity, Sex } from "../types/user";
+import { RelationType, IUser, ICountry, ICity, Sex } from "../objects";
 import { TMainParams, apiGet } from "../types";
 
 /** Отображение даты рождения */

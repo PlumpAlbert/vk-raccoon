@@ -1,5 +1,4 @@
-import { IUser } from "../types/user";
-import { IPost } from "../types/post";
+import { IPost, IUser, IGroup } from "../objects";
 import { TMainParams, apiGet } from "../types";
 
 export interface IParams extends TMainParams {
@@ -46,7 +45,7 @@ export interface IResponse {
   /** Массив пользователей */
   profiles: Array<IUser>;
   /** Массив сообществ */
-  groups: Array<object>;
+  groups: Array<IGroup>;
 }
 
 export default (args: IParams) => {
