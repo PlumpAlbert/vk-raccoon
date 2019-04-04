@@ -7,8 +7,8 @@
 }
 
 .post {
-  min-width: 500px;
-  width: auto;
+  min-width: 550px;
+  width: fit-content;
   height: max-content;
   margin: 16px 24px;
   background: white;
@@ -43,14 +43,14 @@
 
 
 .post-content {
-  margin: 8px 20px 0;
+  margin: 8px 20px;
 }
 .post-content > p {
   margin: 0;
 }
 
 .post-content-attachments {
-  padding: 8px 20px;
+  padding: 0 20px 8px;
 }
 .post-content-attachments > * {
   width: 100%;
@@ -60,6 +60,6 @@
 }
 
 .post-footer {
-  height: 50px;
+  height: 32px;
   background: hsl(0, 0%, 95%);
 }
