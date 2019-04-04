@@ -20,7 +20,7 @@ class ContentPresenter extends React.Component<TStateProps> {
       case Pages.Login:
         return <Login />;
       case Pages.Home:
-        return UserPage(445367510, token);
+        return UserPage(228116662, token);
       case Pages.News:
         return <h1>STILL IN DEVELOPMENT</h1>;
       case Pages.Notifications:
