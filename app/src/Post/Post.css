@@ -17,9 +17,9 @@
 }
 .post-inner {
   height: max-content;
-  border-left: 3px solid hsl(0, 0%, 97%);
+  border-left: 3px solid hsl(0, 0%, 90%);
   margin: 8px 0;
-  background: hsla(0, 0%, 97%, .5);
+  background: hsla(0, 0%, 97%, .3);
   color: hsl(0, 0%, 5%);
   line-height: 1.5rem;
   box-shadow: none;
@@ -76,12 +76,47 @@
 .post-inner .post-content-attachments {
   padding: 8px 14px;
 }
-.post-content-attachments > * {
-  width: 100%;
-  cursor: pointer;
-}
 
 .post-footer {
   height: 32px;
   background: hsl(0, 0%, 95%);
+}
+
+.photo-attachment tr,
+.photo-attachment td,
+.photo-attachment td > img {
+  max-width: 100%;
+}
+
+.photo-attachment tr {
+  display: flex;
+}
+.photo-attachment td {
+  margin: 2px 4px;
+  padding: 0;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+}
+.track > span.fa {
+  font-size: 1.2rem;
+}
+.track-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px;
+  line-height: 1.4;
+}
+.track-title {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+}
+.track-artist {
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  color: hsl(0, 0%, 60%);
 }
