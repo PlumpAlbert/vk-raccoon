@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start-react": "cd ./app && npm run start",
-    "dev": "concurrently \"npm run start-react\" \"wait-on http://localhost:3000 && npm run debug-main\"",
+    "dev": "concurrently \"npm run start-react\" \"wait-on http://localhost:3000 && reset && npm run debug-main\"",
     "debug-main": "NODE_ENV=development electron --inspect=5858 .",
     "test": "cd ./app && npm run test"
   }
