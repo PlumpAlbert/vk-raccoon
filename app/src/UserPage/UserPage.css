@@ -10,7 +10,7 @@
 .user-info {
   display: flex;
   background: hsl(0, 0%, 99%);
-  min-width: 300px;
+  width: 300px;
   flex-direction: column;
   align-content: center;
   box-shadow: 4px 0 12px hsla(0, 0%, 80%, 0.4)
@@ -74,6 +74,7 @@
 }
 
 .about {
+  text-decoration: none;
   align-self: flex-start;
   user-select: none;
   color: hsl(0, 0%, 50%);
@@ -88,4 +89,28 @@
 .user-counters {
   display: flex;
   min-width: 258px;
+}
+
+.friend-list {
+  display: flex;
+
+}
+.friend-list-item {
+  display: flex;
+  flex-direction: column;
+  max-width: 50px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+}
+.friend-list-item > img {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+.friend-list-item > p {
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.2;
+  margin: 0;
 }

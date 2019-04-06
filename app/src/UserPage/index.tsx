@@ -26,7 +26,7 @@ export default function UserPage(userId: number, token: string) {
           "can_send_friend_request",
           "can_write_private_message",
           "status",
-          "photo_400_orig"
+          "photo_200"
         ]
       }).then(users => {
         this.setState({
