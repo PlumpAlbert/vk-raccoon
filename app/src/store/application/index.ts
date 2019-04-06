@@ -3,7 +3,7 @@ import { IApplicationState, ActionTypes, Pages, Locale } from "./types";
 import { TApplicationActions } from "./actions";
 
 export const initialState: IApplicationState = {
-  activePage: Pages.Login,
+  activePage: Pages.Home,
   token: "",
   locale: Locale.en
 };

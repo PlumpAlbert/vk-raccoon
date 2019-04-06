@@ -1,5 +1,4 @@
 export enum Pages {
-  Login = 0,
   Home,
   News,
   Notifications,

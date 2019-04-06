@@ -35,87 +35,65 @@ const mergeProps: MergeProps<TStateProps, TDispatchProps, {}, SideMenuProps> = (
     // If it's the same page - do nothing
     if (newPage === prevPage) return;
     // Deactivate previous page and activate new page
-    if (prevPage !== Pages.Login) {
-      let prevElement = document.getElementById(`${Pages[prevPage as number]}`) as HTMLElement;
-      prevElement.classList.remove("active");
-    }
+    let prevElement = document.getElementById(`${Pages[prevPage as number]}`) as HTMLElement;
+    prevElement.classList.remove("active");
     newElement.classList.add("active");
     activatePage(newPage);
   }
 });
 
 export const SideMenu: React.FC<SideMenuProps> = ({ onMenuItemClick, prevPage }) => (
-  <div className='side-menu' style={prevPage === Pages.Login ? { display: "none" } : undefined}>
-    {prevPage !== Pages.Login && (
-      <span
-        className={`${prevPage === Pages.Home ? "active" : ""} menu-entry fa fa-home`}
-        id='Home'
-        onClick={onMenuItemClick}
-      />
-    )}
-    {prevPage !== Pages.Login && (
-      <span
-        className={`${prevPage === Pages.News ? "active" : ""} menu-entry fa fa-newspaper`}
-        id='News'
-        onClick={onMenuItemClick}
-      />
-    )}
-    {prevPage !== Pages.Login && (
-      <span
-        className={`${prevPage === Pages.Notifications ? "active" : ""} menu-entry fa fa-bell`}
-        id='Notifications'
-        onClick={onMenuItemClick}
-      />
-    )}
-    {prevPage !== Pages.Login && (
-      <span
-        className={`${prevPage === Pages.Messages ? "active" : ""} menu-entry fa fa-envelope-open`}
-        id='Messages'
-        onClick={onMenuItemClick}
-      />
-    )}
-    {prevPage !== Pages.Login && (
-      <span
-        className={`${prevPage === Pages.Friends ? "active" : ""} menu-entry fa fa-user`}
-        id='Friends'
-        onClick={onMenuItemClick}
-      />
-    )}
-    {prevPage !== Pages.Login && (
-      <span
-        className={`${prevPage === Pages.Groups ? "active" : ""} menu-entry fa fa-users`}
-        id='Groups'
-        onClick={onMenuItemClick}
-      />
-    )}
-    {prevPage !== Pages.Login && (
-      <span
-        className={`${prevPage === Pages.Pictures ? "active" : ""} menu-entry fa fa-images`}
-        id='Pictures'
-        onClick={onMenuItemClick}
-      />
-    )}
-    {prevPage !== Pages.Login && (
-      <span
-        className={`${prevPage === Pages.Videos ? "active" : ""} menu-entry fa fa-video`}
-        id='Videos'
-        onClick={onMenuItemClick}
-      />
-    )}
-    {prevPage !== Pages.Login && (
-      <span
-        className={`${prevPage === Pages.Bookmarks ? "active" : ""} menu-entry fa fa-bookmark`}
-        id='Bookmarks'
-        onClick={onMenuItemClick}
-      />
-    )}
-    {prevPage !== Pages.Login && (
-      <span
-        className={`${prevPage === Pages.Documents ? "active" : ""} menu-entry fa fa-file`}
-        id='Documents'
-        onClick={onMenuItemClick}
-      />
-    )}
+  <div className='side-menu'>
+    <span
+      className={`${prevPage === Pages.Home ? "active" : ""} menu-entry fa fa-home`}
+      id='Home'
+      onClick={onMenuItemClick}
+    />
+    <span
+      className={`${prevPage === Pages.News ? "active" : ""} menu-entry fa fa-newspaper`}
+      id='News'
+      onClick={onMenuItemClick}
+    />
+    <span
+      className={`${prevPage === Pages.Notifications ? "active" : ""} menu-entry fa fa-bell`}
+      id='Notifications'
+      onClick={onMenuItemClick}
+    />
+    <span
+      className={`${prevPage === Pages.Messages ? "active" : ""} menu-entry fa fa-envelope-open`}
+      id='Messages'
+      onClick={onMenuItemClick}
+    />
+    <span
+      className={`${prevPage === Pages.Friends ? "active" : ""} menu-entry fa fa-user`}
+      id='Friends'
+      onClick={onMenuItemClick}
+    />
+    <span
+      className={`${prevPage === Pages.Groups ? "active" : ""} menu-entry fa fa-users`}
+      id='Groups'
+      onClick={onMenuItemClick}
+    />
+    <span
+      className={`${prevPage === Pages.Pictures ? "active" : ""} menu-entry fa fa-images`}
+      id='Pictures'
+      onClick={onMenuItemClick}
+    />
+    <span
+      className={`${prevPage === Pages.Videos ? "active" : ""} menu-entry fa fa-video`}
+      id='Videos'
+      onClick={onMenuItemClick}
+    />
+    <span
+      className={`${prevPage === Pages.Bookmarks ? "active" : ""} menu-entry fa fa-bookmark`}
+      id='Bookmarks'
+      onClick={onMenuItemClick}
+    />
+    <span
+      className={`${prevPage === Pages.Documents ? "active" : ""} menu-entry fa fa-file`}
+      id='Documents'
+      onClick={onMenuItemClick}
+    />
     <span
       className={`${prevPage === Pages.Settings ? "active" : ""} menu-entry fa fa-cog`}
       id='Settings'
