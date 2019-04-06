@@ -143,7 +143,7 @@ class Post extends React.Component<IResponse> {
                     for (let i = 0; i < left; i++) {
                       let photo = photos[i].photo;
                       nodes.push(<img
-                        key={photo.access_key}
+                        key={photo.id}
                         src={photo.sizes[photo.sizes.length - 1].url}
                         onClick={(e) => {
                           e.preventDefault();
@@ -162,7 +162,7 @@ class Post extends React.Component<IResponse> {
                         for (let i = 0; i < right; i++) {
                           let photo = photos[i * left + right].photo;
                           nodes.push(<img
-                            key={photo.access_key}
+                            key={photo.id}
                             src={photo.sizes[photo.sizes.length - 1].url}
                             onClick={(e) => {
                               e.preventDefault();
@@ -205,7 +205,7 @@ class Post extends React.Component<IResponse> {
                     for (let i = 0; i < up; i++) {
                       let photo = photos[i].photo;
                       nodes.push(
-                        <td>
+                        <td key={`up${i}`}>
                           <img
                             key={photo.access_key}
                             src={photo.sizes[photo.sizes.length - 1].url}
@@ -228,7 +228,7 @@ class Post extends React.Component<IResponse> {
                     for (let i = 0; i < down; i++) {
                       let photo = photos[up + i].photo;
                       nodes.push(
-                        <td>
+                        <td key={`down${i}`}>
                           <img
                             key={photo.access_key}
                             src={photo.sizes[photo.sizes.length - 1].url}
