@@ -19,37 +19,6 @@ if (isDev) {
 
 var mainWindow;
 
-//#region Helper Functions
-async function getToken() {
-  if (secondaryWindow === null) return;
-  console.log(await secondaryWindow.webContents.executeJavaScript('location'));
-  let token = await secondaryWindow.webContents.executeJavaScript(
-    `var query = new URLSearchParams(location.hash.replace("#", "?")); query.get("access_token")`
-  );
-  console.log(await secondaryWindow.webContents.executeJavaScript('query'))
-  console.log("> Token:", token);
-  if (mainWindow === null) return;
-  if (token) mainWindow.webContents.send("token", token);
-  secondaryWindow.close();
-  secondaryWindow = null;
-}
-
-async function giveAccess() {
-  if (secondaryWindow === null) return;
-  var btn = await secondaryWindow.webContents.executeJavaScript(
-    'var btn = document.querySelector(".flat_button.fl_r.button_indent"); btn'
-  );
-  // If it's a first time user logs in
-  // allowing app to get access to account
-  if (btn) {
-    secondaryWindow.webContents.once("did-finish-load", () => getToken());
-    secondaryWindow.webContents.executeJavaScript("btn.onclick()");
-  }
-  // Else get the access token
-  else getToken();
-}
-//#endregion
-
 app.once("ready", () => {
   mainWindow = new BrowserWindow({
     minWidth: 1000,
@@ -63,6 +32,7 @@ app.once("ready", () => {
   mainWindow.webContents.on('did-navigate', () => {
     let [, token] = mainWindow.webContents.getURL().match(/access_token=(\w+)/) || [];
     if (token) {
+      TOKEN = token;
       mainWindow.loadURL(isDev ? "http://localhost:3000" : require("path").join(__dirname, "app/build/index.html"));
       mainWindow.webContents.removeAllListeners('did-navigate');
       mainWindow.webContents.once('did-stop-loading', () => {
@@ -71,3 +41,8 @@ app.once("ready", () => {
     }
   })
 });
+
+let TOKEN = null;
+ipcMain.on('token', (e) => {
+  e.sender.send('token', TOKEN);
+})

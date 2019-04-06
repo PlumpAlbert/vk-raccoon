@@ -13,6 +13,7 @@ import "./index.css";
 // import * as serviceWorker from "./serviceWorker";
 
 let { ipcRenderer } = (window as any).require("electron");
+ipcRenderer.send('token');
 ipcRenderer.on("token", (e: any, token: string) => {
   const store = createStore(
     MainReducer,
