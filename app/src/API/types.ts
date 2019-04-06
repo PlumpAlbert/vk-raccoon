@@ -8,7 +8,7 @@ export type TMainParams = {
 export async function apiGet<IResponse>(name: string, token: string): Promise<IResponse>;
 export async function apiGet<IResponse>(name: string, token: string, fields: any): Promise<IResponse>;
 export async function apiGet<IResponse>(name: string, token: string, fields?: any) {
-  let query = `?v=5.92&access_token=${token}`;
+  let query = `?v=5.92&access_token=${token}&test_mode=1`;
   if (fields) {
     for (let prop in fields) {
       query += `&${prop}=${fields[prop]}`;
