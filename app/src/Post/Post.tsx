@@ -15,17 +15,16 @@ export interface IProps {
   group?: IGroup;
   data: IPost;
   sources: TSource;
-  id: number;
 }
 
 const Post: React.FC<IProps> = props => {
-  let { data, user, group, sources, id } = props;
-  return renderPost(data, sources, user, group, false, id);
+  let { data, user, group, sources, } = props;
+  return renderPost(data, sources, user, group, false);
 };
-function renderPost(post: IPost, sources: TSource, user?: IUser, group?: IGroup, inner: boolean = false, id?: number) {
+function renderPost(post: IPost, sources: TSource, user?: IUser, group?: IGroup, inner: boolean = false) {
   let date = new Date(post.date * 1000);
   return (
-    <div id={`${id}`} key={post.id} className={`post${inner ? '-inner' : ''}`}>
+    <div key={post.id} className={`post${inner ? '-inner' : ''}`}>
       <div className="post-header">
         <img src={
           user
