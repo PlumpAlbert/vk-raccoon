@@ -19,6 +19,7 @@ export interface IProps {
 
 const Post: React.FC<IProps> = props => {
   let { data, user, group, sources, } = props;
+  console.log(`#POST > Rendering post #${data.id}`, new Date(Date.now()).toLocaleTimeString());
   return renderPost(data, sources, user, group, false);
 };
 function renderPost(post: IPost, sources: TSource, user?: IUser, group?: IGroup, inner: boolean = false) {

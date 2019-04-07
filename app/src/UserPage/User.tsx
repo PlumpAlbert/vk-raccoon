@@ -41,7 +41,7 @@ class User extends React.Component<IProps, IState> {
     return false;
   }
   render() {
-    console.log('#USER > Rendering', new Date(Date.now()).toLocaleString());
+    console.log('#USER > Rendering', new Date(Date.now()).toLocaleTimeString());
     let {
       first_name,
       last_name,
