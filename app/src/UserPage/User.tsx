@@ -41,6 +41,7 @@ class User extends React.Component<IProps, IState> {
     return false;
   }
   render() {
+    console.log('#USER > Rendering', new Date(Date.now()).toLocaleString());
     let {
       first_name,
       last_name,
@@ -96,7 +97,6 @@ class User extends React.Component<IProps, IState> {
     if (!this.state.about) (e.target as HTMLAnchorElement).text = 'Less information ' + String.fromCharCode(0xFE40);
     else (e.target as HTMLAnchorElement).text = 'More information >';
     this.setState({ about: !this.state.about });
-    console.log(this.state.friends)
     if (!this.state.friends) {
       API.friends.get(this.props.token, {
         count: 4,
@@ -105,7 +105,7 @@ class User extends React.Component<IProps, IState> {
         offset: this.state.offset,
         user_id: this.props.user.id
       }).then(res => {
-        console.log('> SetState: Friends')
+        console.log('#USER > Fetch default friends', res, new Date(Date.now()).toLocaleString());
         this.setState({ friends: res });
       });
     }

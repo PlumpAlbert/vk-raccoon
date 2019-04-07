@@ -35,10 +35,11 @@ class Posts extends React.Component<IProps, IState> {
       ]
     };
     API.wall.get(req).then(res => {
-      console.log('> Fetched first posts', new Date(Date.now()).toLocaleString());
+      console.log('#POSTS > Fetched first posts', new Date(Date.now()).toLocaleString());
       this.setState({
         loading: false,
         offset: 10,
+        end: res.count <= 10,
         posts: res.items.map(post => {
           let sources: any[] = [];
           if (post.copy_history) {
@@ -84,16 +85,10 @@ class Posts extends React.Component<IProps, IState> {
           "photo_100"
         ]
       }).then(res => {
-        console.log('> Fetched new posts', res.items, new Date(Date.now()).toLocaleString());
+        console.log('#POSTS > Fetched new posts', res.items, new Date(Date.now()).toLocaleString());
         let count = res.count - offset < 5
           ? res.count - offset
           : 5;
-        // let removedClientHeight = 0;
-        // for (let i = 0; i < count; i++) removedClientHeight -= posts[i].clientHeight;
-        // if (target.scrollTop - removedClientHeight > 500)
-        //   target.scrollBy(0, removedClientHeight);
-        // else
-        //   target.scrollTo(0, 750);
         target.scrollIntoView({ block: 'center' });
         this.setState({
           posts: [
@@ -140,13 +135,10 @@ class Posts extends React.Component<IProps, IState> {
           "photo_100"
         ]
       }).then(res => {
-        console.log('> Fetched previous posts', res.items, new Date(Date.now()).toLocaleString());
+        console.log('#POSTS > Fetched previous posts', res.items, new Date(Date.now()).toLocaleString());
         let count = res.count - offset < 5
           ? res.count - offset
           : 5;
-        // let removedClientHeight = 0;
-        // for (let i = 1; i <= count; i++) removedClientHeight += posts[posts.length - i].clientHeight;
-        // target.scrollBy(0, removedClientHeight);
         target.scrollIntoView({ block: 'center' });
         this.setState({
           posts: [
@@ -182,9 +174,14 @@ class Posts extends React.Component<IProps, IState> {
       });
     }
   }
+  shouldComponentUpdate(newProps: IProps, newState: IState) {
+    if (newProps.userId !== this.props.userId) return true;
+    if (newState.posts !== this.state.posts) return true;
+    return false;
+  }
   render() {
     let { posts } = this.state;
-    console.log('> Rendering posts...', new Date(Date.now()).toLocaleString());
+    console.log('#POSTS > Rendering posts...', new Date(Date.now()).toLocaleString());
     return (
       <div className='post-wrapper' onScroll={this.onScroll}>{
         posts.length === 0
