@@ -15,7 +15,6 @@ interface IState {
   about: boolean;
   offset: number;
   friends: IFriends | null;
-  posts?: ReturnType<typeof Posts>;
 }
 
 class User extends React.Component<IProps, IState> {
@@ -24,9 +23,6 @@ class User extends React.Component<IProps, IState> {
     offset: 0,
     friends: null
   };
-  componentWillMount() {
-    this.setState({ posts: Posts(this.props.token, this.props.user.id) });
-  }
   shouldComponentUpdate(newProps: IProps, newState: IState) {
     if (newState.offset !== this.state.offset) return true;
     if (newState.about !== this.state.about) return true;
@@ -91,13 +87,14 @@ class User extends React.Component<IProps, IState> {
               : null}
           </div>
         </div>
-        {this.state.posts}
+        <Posts token={this.props.token} userId={this.props.user.id} />
       </div>
     );
   }
   aboutClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (this.state.about) (e.target as HTMLAnchorElement).text = 'Less information &#xFE40;'
+    if (!this.state.about) (e.target as HTMLAnchorElement).text = 'Less information ' + String.fromCharCode(0xFE40);
+    else (e.target as HTMLAnchorElement).text = 'More information >';
     this.setState({ about: !this.state.about });
     console.log(this.state.friends)
     if (!this.state.friends) {

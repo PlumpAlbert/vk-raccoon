@@ -1,11 +1,11 @@
-.user-content {
+.post-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1;
   overflow-y: auto;
+  scroll-behavior: smooth;
 }
-
 .post {
   width: 600px;
   height: max-content;
@@ -71,10 +71,10 @@
 }
 
 .post-content-attachments {
-  padding: 8px 20px;
+  padding: 4px 20px;
 }
 .post-inner .post-content-attachments {
-  padding: 8px 14px;
+  padding: 4px 14px;
 }
 
 .post-footer {
@@ -86,28 +86,37 @@
 .photo-attachment td,
 .photo-attachment td > img {
   max-width: 100%;
+  margin: 0;
 }
 
 .photo-attachment tr {
   display: flex;
 }
 .photo-attachment td {
-  margin: 2px 4px;
-  padding: 0;
+  padding: 2px 4px;
 }
 
+.audio-list {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+}
 .track {
   display: flex;
-  align-items: center;
+  align-items: baseline;
+  margin-block-end: 12px;
+}
+.track:last-child {
+  margin: 0;
 }
 .track > span.fa {
-  font-size: 1.2rem;
+  font-size: 10px;
 }
 .track-info {
   display: flex;
   flex-direction: column;
-  padding: 0 12px;
-  line-height: 1.4;
+  padding: 0 8px;
+  line-height: 1.2;
 }
 .track-title {
   margin: 0;
