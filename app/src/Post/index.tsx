@@ -15,7 +15,7 @@ interface IState {
   posts: JSX.Element[]
 }
 
-class Posts extends React.Component<IProps, IState> {
+class Posts extends React.PureComponent<IProps, IState> {
   state: IState = {
     loading: false,
     offset: 0,
@@ -35,7 +35,7 @@ class Posts extends React.Component<IProps, IState> {
       ]
     };
     API.wall.get(req).then(res => {
-      console.log('#POSTS > Fetched first posts', new Date(Date.now()).toLocaleString());
+      console.log('#POSTS > Fetched first posts', new Date(Date.now()).toLocaleTimeString());
       this.setState({
         loading: false,
         offset: 10,
@@ -85,7 +85,7 @@ class Posts extends React.Component<IProps, IState> {
           "photo_100"
         ]
       }).then(res => {
-        console.log('#POSTS > Fetched new posts', res.items, new Date(Date.now()).toLocaleString());
+        console.log('#POSTS > Fetched new posts', res.items, new Date(Date.now()).toLocaleTimeString());
         let count = res.count - offset < 5
           ? res.count - offset
           : 5;
@@ -135,7 +135,7 @@ class Posts extends React.Component<IProps, IState> {
           "photo_100"
         ]
       }).then(res => {
-        console.log('#POSTS > Fetched previous posts', res.items, new Date(Date.now()).toLocaleString());
+        console.log('#POSTS > Fetched previous posts', res.items, new Date(Date.now()).toLocaleTimeString());
         let count = res.count - offset < 5
           ? res.count - offset
           : 5;
@@ -174,14 +174,9 @@ class Posts extends React.Component<IProps, IState> {
       });
     }
   }
-  shouldComponentUpdate(newProps: IProps, newState: IState) {
-    if (newProps.userId !== this.props.userId) return true;
-    if (newState.posts !== this.state.posts) return true;
-    return false;
-  }
   render() {
     let { posts } = this.state;
-    console.log('#POSTS > Rendering posts...', new Date(Date.now()).toLocaleString());
+    console.log('#POSTS > Rendering posts...', new Date(Date.now()).toLocaleTimeString());
     return (
       <div className='post-wrapper' onScroll={this.onScroll}>{
         posts.length === 0
