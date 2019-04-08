@@ -1,0 +1,10 @@
+.messages-page {
+  width: 100%;
+  display: flex;
+}
+
+.conversation-wrapper {
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+}

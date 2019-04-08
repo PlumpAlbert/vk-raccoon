@@ -4,6 +4,7 @@ import { Pages } from "../store/application/types";
 import { IGlobalStore } from "../store";
 import Dev from "../dev";
 import UserPage from "../UserPage";
+import Messages from "../Messages";
 
 type TStateProps = {
   user_id: number;
@@ -27,7 +28,7 @@ class ContentPresenter extends React.Component<TStateProps> {
       case Pages.Notifications:
         return <Dev />;
       case Pages.Messages:
-        return <Dev />;
+        return <Messages token={token} />;
       case Pages.Friends:
         return <Dev />;
       case Pages.Groups:
