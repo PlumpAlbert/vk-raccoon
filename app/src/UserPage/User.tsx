@@ -24,7 +24,6 @@ class User extends React.Component<IProps, IState> {
     friends: null
   };
   shouldComponentUpdate(newProps: IProps, newState: IState) {
-    if (newState.offset !== this.state.offset) return true;
     if (newState.about !== this.state.about) return true;
     if (newState.friends !== this.state.friends) return true;
     if (newState.offset !== this.state.offset) {

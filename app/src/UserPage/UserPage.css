@@ -13,7 +13,9 @@
   width: 300px;
   flex-direction: column;
   align-content: center;
-  box-shadow: 4px 0 12px hsla(0, 0%, 80%, 0.4)
+  box-shadow: 4px 0 12px hsla(0, 0%, 80%, 0.4);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .user-wrapper {
@@ -80,16 +82,25 @@
   user-select: none;
   color: hsl(0, 0%, 50%);
   transition: color .1s ease-in;
+  line-height: 1;
 }
 
 .about:hover {
   color: inherit;
   cursor: pointer;
 }
-
-.user-counters {
+.about-content {
+  width: 100%;
+}
+.about-friends {
+  width: 100%;
   display: flex;
-  min-width: 258px;
+  flex-direction: column;
+}
+.about-friends > p {
+  align-self: flex-start;
+  line-height: 1;
+  margin: 8px 0;
 }
 
 .friend-list {
