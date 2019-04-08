@@ -219,7 +219,7 @@ class Posts extends React.Component<IProps, IState> {
           ],
           offset: offset + res.items.length,
           loading: false,
-          end: res.count === offset + res.items.length
+          end: res.count === offset + res.items.length - 1
         });
       });
     }
@@ -269,7 +269,7 @@ class Posts extends React.Component<IProps, IState> {
             }),
             ...this.state.posts.slice(0, postCount - res.items.length)
           ],
-          offset: offset - res.items.length,
+          offset: offset - res.items.length - 1,
           loading: false,
           end: false
         });
