@@ -9,7 +9,7 @@
 .post {
   width: 600px;
   height: max-content;
-  margin: 16px 24px;
+  margin: 16px 8px;
   background: white;
   color: hsl(0, 0%, 5%);
   box-shadow: 0 4px 8px hsla(0, 0%, 70%, .3);

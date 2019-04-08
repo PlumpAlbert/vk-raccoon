@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { IParams, IResponse } from '../API/wall/get';
-import Post, { IProps as PostProps } from './Post';
+import { IParams } from '../API/wall/get';
+import Post from './Post';
 import API from '../API';
 import { IGroup, IUser } from '../API/objects';
 
@@ -16,7 +16,7 @@ interface IState {
   posts: JSX.Element[];
 }
 
-class Posts extends React.PureComponent<IProps, IState> {
+class Posts extends React.Component<IProps, IState> {
   state: IState = {
     loading: false,
     offset: 0,
@@ -70,18 +70,34 @@ class Posts extends React.PureComponent<IProps, IState> {
     });
   }
   shouldComponentUpdate(newProps: IProps, newState: IState) {
-    console.log('#POST > props/state has changed', newProps, newState);
     let { loading: newLoading, ...newStateProps } = newState;
     let { loading: prevLoading, ...prevStateProps } = this.state;
     if (newLoading !== prevLoading) {
       let prevS = prevStateProps as any;
       let newS = newStateProps as any;
       for (let key in prevS) {
-        if (prevS[key] !== newS[key]) return true;
+        if (prevS[key] !== newS[key]) {
+          console.log(
+            '#POST > props/state had changed\n',
+            'newProps =', newProps, '\n',
+            'newState =', newState, '\n',
+            new Date(Date.now()).toLocaleTimeString()
+          );
+          return true;
+        };
       }
       return false;
     }
-    return true;
+    else if (newState !== this.state) {
+      console.log(
+        '#POST > props/state had changed\n',
+        'newProps =', newProps, '\n',
+        'newState =', newState, '\n',
+        new Date(Date.now()).toLocaleTimeString()
+      );
+      return true;
+    }
+    return false;
   }
   componentDidUpdate() {
     let node = document.querySelector('div.post-wrapper');
