@@ -5,9 +5,9 @@ import { IGlobalStore } from "../store";
 import Dev from "../dev";
 import UserPage from "../UserPage";
 import Messages from "../Messages";
-import createLog from "../logging";
+import { infoLog } from "../logging";
 
-const log = createLog('ContentPresenter');
+const log = infoLog('ContentPresenter');
 
 type TStateProps = {
   user_id: number;
@@ -25,7 +25,7 @@ class ContentPresenter extends React.Component<TStateProps> {
         const Kate = 445367510;
         const Anya = 228116662;
         const Arthur = 310543856;
-        return UserPage(Arthur, token);
+        return UserPage(Anya, token);
       case Pages.News:
         return <Dev />;
       case Pages.Notifications:

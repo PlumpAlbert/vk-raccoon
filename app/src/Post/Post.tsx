@@ -8,20 +8,20 @@ import {
   IGroup,
   IUser
 } from "../API/objects";
-import createLog from "../logging";
+import { infoLog } from "../logging";
 import "./Post.css";
 
-const log = createLog("Post");
+const log = infoLog("Post");
 
 type TSource = (
   | {
-      type: "IUser";
-      data: IUser;
-    }
+    type: "IUser";
+    data: IUser;
+  }
   | {
-      type: "IGroup";
-      data: IGroup;
-    })[];
+    type: "IGroup";
+    data: IGroup;
+  })[];
 
 export interface IProps {
   user?: IUser;
@@ -53,9 +53,9 @@ class Post extends React.PureComponent<IProps> {
               user !== undefined
                 ? user.first_name
                 : group !== undefined
-                ? group.name
-                : "Unknown Source"
-            }${user ? " " + user.last_name : ""}`}</h1>
+                  ? group.name
+                  : "Unknown Source"
+              }${user ? " " + user.last_name : ""}`}</h1>
             <p>{date.toLocaleString()}</p>
           </div>
         </div>
@@ -63,18 +63,18 @@ class Post extends React.PureComponent<IProps> {
           {post.text ? <p>{post.text}</p> : null}
           {post.copy_history
             ? post.copy_history.map((repost, i) => {
-                return this.renderPost(
-                  repost,
-                  sources,
-                  sources[i].type === "IUser"
-                    ? (sources[i].data as IUser)
-                    : undefined,
-                  sources[i].type === "IGroup"
-                    ? (sources[i].data as IGroup)
-                    : undefined,
-                  true
-                );
-              })
+              return this.renderPost(
+                repost,
+                sources,
+                sources[i].type === "IUser"
+                  ? (sources[i].data as IUser)
+                  : undefined,
+                sources[i].type === "IGroup"
+                  ? (sources[i].data as IGroup)
+                  : undefined,
+                true
+              );
+            })
             : null}
           {post.attachments ? (
             <div className="post-content-attachments">
@@ -222,7 +222,7 @@ class Post extends React.PureComponent<IProps> {
             <tbody>
               <tr>
                 <td key="left-column">
-                  {(function() {
+                  {(function () {
                     let nodes = [];
                     for (let i = 0; i < left; i++) {
                       let photo = photos[i * left].photo;
@@ -239,7 +239,7 @@ class Post extends React.PureComponent<IProps> {
                 </td>
                 {right > 0 ? (
                   <td key="right-column">
-                    {(function() {
+                    {(function () {
                       let nodes = [];
                       for (let i = 0; i < right; i++) {
                         let photo = photos[i * left + 1].photo;
@@ -305,7 +305,7 @@ class Post extends React.PureComponent<IProps> {
           <table key="table" className="photo-attachment">
             <tbody>
               <tr>
-                {(function() {
+                {(function () {
                   let nodes = [];
                   for (let i = 0; i < up; i++) {
                     let photo = photos[i].photo;
@@ -323,7 +323,7 @@ class Post extends React.PureComponent<IProps> {
                 })()}
               </tr>
               <tr>
-                {(function() {
+                {(function () {
                   let nodes = [];
                   for (let i = 0; i < down; i++) {
                     let photo = photos[up + i].photo;
