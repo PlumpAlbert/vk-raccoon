@@ -1,10 +1,12 @@
 import React from "react";
 import { IUser, FriendStatus } from "../API/objects/user";
 import { IResponse as IFriends, Order } from '../API/friends/get';
-
-import './UserPage.css';
 import Posts from "../Post";
 import API from "../API";
+import createLog from "../logging";
+import './UserPage.css';
+
+const log = createLog('User');
 
 interface IProps {
   user: IUser;
@@ -34,13 +36,14 @@ class User extends React.Component<IProps, IState> {
         offset: newState.offset,
         user_id: this.props.user.id
       }).then(res => {
+        log('Fetched new friends', res);
         this.setState({ friends: res });
       });
     }
     return false;
   }
   render() {
-    console.log('#USER > Rendering', new Date(Date.now()).toLocaleTimeString());
+    log('Rendering');
     let {
       first_name,
       last_name,

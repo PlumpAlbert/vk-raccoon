@@ -5,6 +5,9 @@ import { IGlobalStore } from "../store";
 import Dev from "../dev";
 import UserPage from "../UserPage";
 import Messages from "../Messages";
+import createLog from "../logging";
+
+const log = createLog('ContentPresenter');
 
 type TStateProps = {
   user_id: number;
@@ -16,7 +19,7 @@ class ContentPresenter extends React.Component<TStateProps> {
   shouldComponentUpdate = (newProps: TStateProps) => newProps.activePage !== this.props.activePage;
   render() {
     let { activePage, user_id, token } = this.props;
-    console.log("> ContentPresenter:", activePage);
+    log('Active page:', activePage);
     switch (activePage) {
       case Pages.Home:
         const Kate = 445367510;

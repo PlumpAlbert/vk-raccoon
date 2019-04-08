@@ -3,6 +3,9 @@ import { IParams } from '../API/wall/get';
 import Post from './Post';
 import API from '../API';
 import { IGroup, IUser } from '../API/objects';
+import createLog from '../logging';
+
+const log = createLog('Posts');
 
 interface IProps {
   token: string;
@@ -37,7 +40,7 @@ class Posts extends React.Component<IProps, IState> {
       ]
     };
     API.wall.get(req).then(res => {
-      console.log('#POSTS > Fetched initial posts', new Date(Date.now()).toLocaleTimeString());
+      log('Fetched initial posts');
       this.setState({
         loading: false,
         offset: 10,
@@ -77,11 +80,10 @@ class Posts extends React.Component<IProps, IState> {
       let newS = newStateProps as any;
       for (let key in prevS) {
         if (prevS[key] !== newS[key]) {
-          console.log(
-            '#POST > props/state had changed\n',
+          log(
+            'props/state had changed\n',
             'newProps =', newProps, '\n',
-            'newState =', newState, '\n',
-            new Date(Date.now()).toLocaleTimeString()
+            'newState =', newState, '\n'
           );
           return true;
         };
@@ -89,11 +91,10 @@ class Posts extends React.Component<IProps, IState> {
       return false;
     }
     else if (newState !== this.state) {
-      console.log(
-        '#POST > props/state had changed\n',
+      log(
+        'props/state had changed\n',
         'newProps =', newProps, '\n',
-        'newState =', newState, '\n',
-        new Date(Date.now()).toLocaleTimeString()
+        'newState =', newState, '\n'
       );
       return true;
     }
@@ -117,7 +118,8 @@ class Posts extends React.Component<IProps, IState> {
           "photo_100"
         ]
       }).then(res => {
-        console.log('#POSTS > Appending initial posts', res.items, new Date(Date.now()).toLocaleTimeString());
+        log('Appending initial posts', res.items);
+
         this.setState({
           offset: this.state.offset + res.items.length,
           postCount: this.state.postCount + 5,
@@ -171,7 +173,7 @@ class Posts extends React.Component<IProps, IState> {
           "photo_100"
         ]
       }).then(res => {
-        console.log('#POSTS > Appending initial posts', res.items, new Date(Date.now()).toLocaleTimeString());
+        log('Appending initial posts', res.items);
         this.setState({
           offset: offset + res.items.length,
           postCount: this.state.postCount + 5,
@@ -220,7 +222,7 @@ class Posts extends React.Component<IProps, IState> {
           "photo_100"
         ]
       }).then(res => {
-        console.log('#POSTS > Fetched new posts', res.items, new Date(Date.now()).toLocaleTimeString());
+        log('Fetched new posts', res.items);
         this.setState({
           posts: [
             ...this.state.posts.slice(res.items.length),
@@ -266,7 +268,7 @@ class Posts extends React.Component<IProps, IState> {
           "photo_100"
         ]
       }).then(res => {
-        console.log('#POSTS > Fetched previous posts', res.items, new Date(Date.now()).toLocaleTimeString());
+        log('Fetched previous posts', res.items);
         this.setState({
           posts: [
             ...res.items.map(post => {
@@ -303,7 +305,7 @@ class Posts extends React.Component<IProps, IState> {
   }
   render() {
     let { posts } = this.state;
-    console.log('#POSTS > Rendering posts...', new Date(Date.now()).toLocaleTimeString());
+    log('Rendering');
     return (
       <div className='post-wrapper' onScroll={this.onScroll}>{
         posts.length === 0
