@@ -13,7 +13,7 @@
   width: 300px;
   flex-direction: column;
   align-content: center;
-  box-shadow: 4px 0 12px hsla(0, 0%, 80%, 0.4);
+  box-shadow: 4px 0 18px hsla(0, 0%, 80%, 0.8);
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -50,11 +50,11 @@
   margin: 16px 0;
   padding: 12px 24px;
   line-height: 1.5;
-  font-style: italic
+  font-style: italic;
 }
 
 .user-wrapper > blockquote::before {
-  content: '\201C';
+  content: "\201C";
   font-size: 3em;
   position: absolute;
   left: 6px;
@@ -81,7 +81,7 @@
   align-self: flex-start;
   user-select: none;
   color: hsl(0, 0%, 50%);
-  transition: color .1s ease-in;
+  transition: color 0.1s ease-in;
   line-height: 1;
 }
 
@@ -105,7 +105,6 @@
 
 .friend-list {
   display: flex;
-
 }
 .friend-list-item {
   display: flex;
