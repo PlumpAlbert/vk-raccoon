@@ -12,19 +12,18 @@
   margin: 16px 8px;
   background: white;
   color: hsl(0, 0%, 5%);
-  box-shadow: 0 4px 8px hsla(0, 0%, 70%, .3);
+  box-shadow: 0 4px 8px hsla(0, 0%, 70%, 0.3);
   line-height: 1.5rem;
 }
 .post-inner {
   height: max-content;
   border-left: 3px solid hsl(0, 0%, 90%);
   margin: 8px 0;
-  background: hsla(0, 0%, 97%, .3);
+  background: hsla(0, 0%, 97%, 0.3);
   color: hsl(0, 0%, 5%);
   line-height: 1.5rem;
   box-shadow: none;
 }
-
 
 .post-header {
   display: flex;
@@ -59,7 +58,6 @@
   margin: 0;
 }
 
-
 .post-content {
   margin: 8px 20px;
 }
@@ -78,8 +76,55 @@
 }
 
 .post-footer {
+  display: flex;
   height: 32px;
   background: hsl(0, 0%, 95%);
+  padding: 4px 20px;
+  align-items: center;
+}
+.post-like,
+.post-likes {
+  width: 32px;
+  max-height: 100%;
+}
+.post-like .white,
+.post-likes .white {
+  fill: white;
+}
+.post-like .light {
+  fill: hsl(0, 0%, 90%);
+}
+.post-like .dim {
+  fill: hsl(0, 0%, 70%);
+}
+.post-like .regular {
+  fill: hsl(0, 0%, 50%);
+}
+.post-like .medium {
+  fill: hsl(0, 0%, 30%);
+}
+.post-like .dark {
+  fill: hsl(0, 0%, 5%);
+}
+
+.post-likes .light {
+  fill: hsl(280, 100%, 90%);
+}
+.post-likes .dim {
+  fill: hsl(280, 100%, 80%);
+}
+.post-likes .regular {
+  fill: hsl(280, 50%, 60%);
+}
+.post-likes .medium {
+  fill: hsl(280, 60%, 50%);
+}
+.post-likes .dark {
+  fill: hsl(280, 80%, 23%);
+}
+.post-footer > span {
+  margin-left: 8px;
+  color: hsl(0, 0%, 30%);
 }
 
 .photo-attachment tr,
