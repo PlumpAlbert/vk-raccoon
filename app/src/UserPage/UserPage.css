@@ -39,6 +39,7 @@
 }
 
 .user-wrapper > blockquote {
+  word-wrap: break-word;
   position: relative;
   width: calc(100% - 48px);
   background-color: hsl(0, 0%, 95%);
