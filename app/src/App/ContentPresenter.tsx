@@ -18,7 +18,10 @@ class ContentPresenter extends React.Component<TStateProps> {
     console.log("> ContentPresenter:", activePage);
     switch (activePage) {
       case Pages.Home:
-        return UserPage(user_id, token);
+        const Kate = 445367510;
+        const Anya = 228116662;
+        const Arthur = 310543856;
+        return UserPage(Arthur, token);
       case Pages.News:
         return <h1>STILL IN DEVELOPMENT</h1>;
       case Pages.Notifications:
