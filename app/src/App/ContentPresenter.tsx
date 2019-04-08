@@ -2,7 +2,7 @@ import React from "react";
 import { connect, MapStateToProps } from "react-redux";
 import { Pages } from "../store/application/types";
 import { IGlobalStore } from "../store";
-import Login from "../Login";
+import Dev from "../dev";
 import UserPage from "../UserPage";
 
 type TStateProps = {
@@ -23,25 +23,25 @@ class ContentPresenter extends React.Component<TStateProps> {
         const Arthur = 310543856;
         return UserPage(Arthur, token);
       case Pages.News:
-        return <h1>STILL IN DEVELOPMENT</h1>;
+        return <Dev />;
       case Pages.Notifications:
-        return <h1>STILL IN DEVELOPMENT</h1>;
+        return <Dev />;
       case Pages.Messages:
-        return <h1>STILL IN DEVELOPMENT</h1>;
+        return <Dev />;
       case Pages.Friends:
-        return <h1>STILL IN DEVELOPMENT</h1>;
+        return <Dev />;
       case Pages.Groups:
-        return <h1>STILL IN DEVELOPMENT</h1>;
+        return <Dev />;
       case Pages.Pictures:
-        return <h1>STILL IN DEVELOPMENT</h1>;
+        return <Dev />;
       case Pages.Videos:
-        return <h1>STILL IN DEVELOPMENT</h1>;
+        return <Dev />;
       case Pages.Bookmarks:
-        return <h1>STILL IN DEVELOPMENT</h1>;
+        return <Dev />;
       case Pages.Documents:
-        return <h1>STILL IN DEVELOPMENT</h1>;
+        return <Dev />;
       case Pages.Settings:
-        return <h1>STILL IN DEVELOPMENT</h1>;
+        return <Dev />;
     }
   }
 };
