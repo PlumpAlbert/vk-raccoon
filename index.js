@@ -1,7 +1,15 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 
 const isDev = process.env.NODE_ENV === "development";
-const authUrl = "https://oauth.vk.com/authorize?client_id=6845379&redirect_uri=https://oauth.vk.com/blank.html&display=popup&scope=wall,friends,photos&response_type=token&v=5.92&state=raccoon&test_mode=1";
+const authUrl = "https://oauth.vk.com/authorize?"
+  + "client_id=6845379"
+  + "&redirect_uri=https://oauth.vk.com/blank.html"
+  + "&display=page"
+  + "&scope=wall,friends,photos,messages"
+  + "&response_type=token"
+  + "&v=5.92"
+  + "&state=raccoon"
+  + "&test_mode=1";
 
 if (isDev) {
   const { default: installExtension, REDUX_DEVTOOLS } = require("electron-devtools-installer");
