@@ -20,16 +20,16 @@ interface IState {
 }
 
 class Posts extends React.Component<IProps, IState> {
-  state: IState = {
-    loading: false,
-    offset: 0,
-    postCount: 0,
-    end: false,
-    posts: []
-  };
-  componentWillMount() {
-    let { token, userId } = this.props;
-    this.setState({ loading: true });
+  constructor(props: IProps) {
+    super(props);
+    let { token, userId } = props;
+    this.state = {
+      loading: true,
+      offset: 0,
+      postCount: 0,
+      end: false,
+      posts: []
+    };
     API.wall
       .get({
         token,
