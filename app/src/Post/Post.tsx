@@ -6,7 +6,8 @@ import {
   IPhotoAttachment,
   IAudioAttachment,
   IGroup,
-  IUser
+  IUser,
+  ILikes
 } from "../API/objects";
 import { infoLog } from "../logging";
 import "./Post.css";
@@ -26,8 +27,17 @@ type TSource = (
 export interface IProps {
   user?: IUser;
   group?: IGroup;
-  data: IPost;
+  data: IData;
   sources: TSource;
+}
+
+interface IData {
+  id: number;
+  date: number;
+  text: string;
+  copy_history?: IData[];
+  attachments?: IAttachment[];
+  likes: ILikes;
 }
 
 class Post extends React.PureComponent<IProps> {
@@ -37,7 +47,7 @@ class Post extends React.PureComponent<IProps> {
     return this.renderPost(data, sources, user, group, false);
   }
   renderPost = (
-    post: IPost,
+    post: IData,
     sources: TSource,
     user?: IUser,
     group?: IGroup,
