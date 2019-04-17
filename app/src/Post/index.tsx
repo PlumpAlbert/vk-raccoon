@@ -2,9 +2,9 @@ import * as React from "react";
 import Post from "./Post";
 import API from "../API";
 import { IGroup, IUser } from "../API/objects";
-import { infoLog, errorLog } from "../logging";
+import { Log, errorLog } from "../logging";
 
-const log = infoLog("Posts");
+const log = Log("Posts");
 const error = errorLog("Posts");
 
 interface IProps {

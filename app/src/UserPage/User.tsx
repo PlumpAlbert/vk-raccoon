@@ -3,10 +3,10 @@ import { IUser, FriendStatus } from "../API/objects/user";
 import { IResponse as IFriends, Order } from '../API/friends/get';
 import Posts from "../Post";
 import API from "../API";
-import { infoLog } from "../logging";
+import { Log } from "../logging";
 import './UserPage.css';
 
-const log = infoLog('User');
+const log = Log('User');
 
 interface IProps {
   user: IUser;

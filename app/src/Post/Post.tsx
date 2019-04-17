@@ -9,10 +9,10 @@ import {
   IUser,
   ILikes
 } from "../API/objects";
-import { infoLog } from "../logging";
+import { Log } from "../logging";
 import "./Post.css";
 
-const log = infoLog("Post");
+const log = Log("Post");
 
 type TSource = (
   | {
@@ -207,7 +207,8 @@ class Post extends React.PureComponent<IProps> {
       case 3:
       case 4: {
         let left = 1,
-          right = 0;
+          right = 0,
+          maxHeight: number | null = photos[0].photo.sizes[photos[0].photo.sizes.length - 1].height;
         switch (photos.length) {
           case 2:
             {
@@ -221,6 +222,7 @@ class Post extends React.PureComponent<IProps> {
             break;
           case 4:
             {
+              maxHeight = null;
               left = right = 2;
             }
             break;
@@ -230,8 +232,11 @@ class Post extends React.PureComponent<IProps> {
         return (
           <table key="table" className="photo-attachment">
             <tbody>
-              <tr>
-                <td key="left-column">
+              <tr style={{
+                maxHeight: maxHeight ? maxHeight : 'fit-content'
+              }}>
+
+                <td key="left-column" style={{ flex: 2 / left }}>
                   {(function () {
                     let nodes = [];
                     for (let i = 0; i < left; i++) {
@@ -248,7 +253,7 @@ class Post extends React.PureComponent<IProps> {
                   })()}
                 </td>
                 {right > 0 ? (
-                  <td key="right-column">
+                  <td key="right-column" style={{ flex: 2 / right }}>
                     {(function () {
                       let nodes = [];
                       for (let i = 0; i < right; i++) {
@@ -319,6 +324,7 @@ class Post extends React.PureComponent<IProps> {
                   let nodes = [];
                   for (let i = 0; i < up; i++) {
                     let photo = photos[i].photo;
+                    let pic = photo.sizes[photo.sizes.length - 1];
                     nodes.push(
                       <td key={`up${i}`}>
                         <img
@@ -337,11 +343,12 @@ class Post extends React.PureComponent<IProps> {
                   let nodes = [];
                   for (let i = 0; i < down; i++) {
                     let photo = photos[up + i].photo;
+                    let pic = photo.sizes[photo.sizes.length - 1];
                     nodes.push(
                       <td key={`down${i}`}>
                         <img
                           key={photo.access_key}
-                          src={photo.sizes[photo.sizes.length - 1].url}
+                          src={pic.url}
                           onClick={self.onPictureClick}
                         />
                       </td>

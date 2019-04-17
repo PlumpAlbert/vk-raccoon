@@ -4,6 +4,7 @@ import { changePage } from "../store/application/actions";
 import { Pages } from "../store/application/types";
 import { IGlobalStore } from "../store";
 import "./css/SideMenu.css";
+import { Log } from "../logging";
 
 type TStateProps = {
   prevPage: Pages;
@@ -29,6 +30,7 @@ const mergeProps: MergeProps<TStateProps, TDispatchProps, {}, SideMenuProps> = (
   prevPage,
   activatePage,
   onMenuItemClick: function (e) {
+    log(`Switching to ${e.currentTarget.id}`)
     // The element that user clicked on
     let newElement = e.target as HTMLElement;
     let newPage = Pages[newElement.id as keyof typeof Pages];
@@ -101,6 +103,8 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onMenuItemClick, prevPage })
     />
   </div>
 );
+
+const log = Log(SideMenu.name);
 
 export default connect(
   mapStateToProps,
