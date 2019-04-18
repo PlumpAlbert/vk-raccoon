@@ -29,6 +29,7 @@
   display: flex;
   align-items: center;
   padding: 12px 20px 0;
+  margin-block-end: 12px;
 }
 .post-inner .post-header {
   padding: 8px 14px 0;
@@ -59,7 +60,7 @@
 }
 
 .post-content {
-  margin: 8px 20px;
+  margin: 0 20px;
 }
 .post-inner .post-content {
   margin: 8px 14px;
@@ -79,6 +80,7 @@
   display: flex;
   height: 32px;
   background: hsl(0, 0%, 95%);
+  margin-top: 12px;
   padding: 4px 20px;
   align-items: center;
 }
@@ -130,7 +132,7 @@
 .photo-attachment tr,
 .photo-attachment td,
 .photo-attachment td > img {
-  max-width: 100%;
+  width: 100%;
   margin: 0;
 }
 
@@ -138,7 +140,15 @@
   display: flex;
 }
 .photo-attachment td {
-  padding: 2px 2px;
+  display: flex;
+  flex-direction: column;
+  margin: 2px 2px;
+}
+
+.photo-attachment td > img {
+  flex: 1 0 auto;
+  object-fit: cover;
+  height: 100%;
 }
 
 .audio-list {

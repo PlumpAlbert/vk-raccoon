@@ -5,9 +5,10 @@ import { IGlobalStore } from "../store";
 import Dev from "../dev";
 import UserPage from "../UserPage";
 import Messages from "../Messages";
-import { infoLog } from "../logging";
+import { Log } from "../logging";
+import NewsFeed from "../News";
 
-const log = infoLog('ContentPresenter');
+const log = Log('ContentPresenter');
 
 type TStateProps = {
   user_id: number;
@@ -19,7 +20,7 @@ class ContentPresenter extends React.Component<TStateProps> {
   shouldComponentUpdate = (newProps: TStateProps) => newProps.activePage !== this.props.activePage;
   render() {
     let { activePage, user_id, token } = this.props;
-    log('Active page:', activePage);
+    log('Active page:', Pages[activePage]);
     switch (activePage) {
       case Pages.Home:
         const Kate = 445367510;
@@ -27,7 +28,7 @@ class ContentPresenter extends React.Component<TStateProps> {
         const Arthur = 310543856;
         return UserPage(Anya, token);
       case Pages.News:
-        return <Dev />;
+        return <NewsFeed token={token} />;
       case Pages.Notifications:
         return <Dev />;
       case Pages.Messages:

@@ -1,0 +1,8 @@
+.news-feed {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: none;
+  overflow-y: auto;
+}
