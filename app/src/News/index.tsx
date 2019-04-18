@@ -23,7 +23,7 @@ export default class NewsFeed extends React.Component<IProps, IState> {
     API.newsfeed.get({
       token: props.token,
       filters: Filter.post,
-      count: 20,
+      count: 50,
       fields: [
         'first_name',
         'last_name',
@@ -184,8 +184,67 @@ export default class NewsFeed extends React.Component<IProps, IState> {
       && target.scrollTop < delta
     ) {
       // TODO - Fetch previous posts
-      // this.setState({ fetching: true });
-      // log('Fetching previous posts');
+      this.setState({ fetching: true });
+      log('Fetching previous posts');
+      API.newsfeed.get({
+        token: this.props.token,
+        end_time: this.state.posts[0].props.data.date,
+        filters: Filter.post,
+        count: 10,
+        fields: [
+          'first_name',
+          'last_name',
+          'name',
+          'photo_100'
+        ]
+      }).then(res => {
+        log('Fetching done!');
+        this.setState({
+          start: res.items.length === 0,
+          end: false,
+          start_from: res.next_from,
+          posts: [
+            ...res.items.map<JSX.Element>(p => {
+              let post = p as IPostNews;
+              let sources: any[] = [];
+              if (post.copy_history) {
+                sources = post.copy_history.map(repost => {
+                  if (repost.from_id >= 0)
+                    return {
+                      type: "IUser",
+                      data: res.profiles.find(
+                        user => user.id === repost.from_id
+                      ) as IUser
+                    };
+                  return {
+                    type: "IGroup",
+                    data: res.groups.find(
+                      group => group.id === -repost.from_id
+                    ) as IGroup
+                  };
+                });
+              }
+              return (
+                <Post
+                  key={post.post_id}
+                  data={{
+                    id: post.post_id,
+                    attachments: post.attachments,
+                    copy_history: post.copy_history,
+                    date: post.date,
+                    likes: post.likes,
+                    text: post.text
+                  }}
+                  sources={sources}
+                  user={res.profiles.find(user => user.id === post.source_id)}
+                  group={res.groups.find(group => group.id === -post.source_id)}
+                />
+              );
+            }),
+            ...this.state.posts.slice(0, this.state.posts.length - res.items.length)
+          ]
+        })
+      })
     }
   }
   componentDidUpdate = () => {
