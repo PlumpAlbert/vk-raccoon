@@ -10,11 +10,11 @@ export interface IParams extends TMainParams {
   return_banned?: boolean;
   /** время в формате unixtime, начиная с которого следует получить
    *  новости для текущего пользователя */
-  start_time?: Date;
+  start_time?: number;
   /** время в формате unixtime, до которого следует получить
    *  новости для текущего пользователя.
    **  Если параметр не задан, то он считается равным текущему времени */
-  end_time?: Date;
+  end_time?: number;
   /** Максимальное количество фотографий,
    * информацию о которых необходимо вернуть.
    ** По умолчанию: 5
@@ -41,6 +41,7 @@ export interface IResponse {
   items: INews[];
   profiles: IUser[];
   groups: IGroup[];
+  next_from: string;
 }
 
 export default (args: IParams) => {
@@ -49,10 +50,6 @@ export default (args: IParams) => {
     request.fields = args.fields.join(',');
   if (args.source_ids && (args.source_ids as number[]).join)
     request.source_ids = (args.source_ids as number[]).join(',');
-  if (args.start_time)
-    request.start_time = Math.floor(args.start_time.valueOf() / 1000);
-  if (args.end_time)
-    request.end_time = Math.floor(args.end_time.valueOf() / 1000);
   request.return_banned = args.return_banned ? '1' : '0';
   return apiGet<IResponse>('newsfeed.get', args.token, request);
 }
