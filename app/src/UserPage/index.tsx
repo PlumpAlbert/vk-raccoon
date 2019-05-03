@@ -1,5 +1,5 @@
 import React from 'react';
-import { IUser } from '../API/objects/user';
+import { IUser } from '../API/objects';
 import API from '../API';
 import User from './User';
 

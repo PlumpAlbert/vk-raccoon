@@ -1,7 +1,7 @@
 import * as React from 'react'
 import API from '../API';
 import { Filter, IPostNews } from '../API/newsfeed/types';
-import Post, { IProps as PostProps } from '../Post/Post';
+import Post, { IProps as PostProps } from '../Post';
 import { IGroup, IUser } from '../API/objects';
 import { Log, errorLog, infoLog } from '../logging';
 import './news.css'

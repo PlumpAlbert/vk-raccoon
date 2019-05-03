@@ -1,7 +1,7 @@
 import React from "react";
-import { IUser, FriendStatus } from "../API/objects/user";
+import { IUser, FriendStatus } from "../API/objects";
 import { IResponse as IFriends, Order } from '../API/friends/get';
-import Posts from "../Post";
+import Posts from "./UserPosts";
 import API from "../API";
 import { Log } from "../logging";
 import './UserPage.css';
@@ -25,6 +25,7 @@ class User extends React.Component<IProps, IState> {
     offset: 0,
     friends: null
   };
+
   shouldComponentUpdate(newProps: IProps, newState: IState) {
     if (newState.about !== this.state.about) return true;
     if (newState.friends !== this.state.friends) return true;
@@ -37,11 +38,12 @@ class User extends React.Component<IProps, IState> {
         user_id: this.props.user.id
       }).then(res => {
         log('Fetched new friends', res);
-        this.setState({ friends: res });
+        this.setState({friends: res});
       });
     }
     return false;
   }
+
   render() {
     log('Rendering');
     let {
@@ -66,7 +68,7 @@ class User extends React.Component<IProps, IState> {
       <div className='user'>
         <div className="user-info">
           <div className='user-wrapper'>
-            <img src={photo_200} alt="UserPhoto" />
+            <img src={photo_200} alt="UserPhoto"/>
             <h3>{`${first_name} ${maiden_name ? `(${maiden_name}) ${last_name}` : last_name}`}</h3>
             {status ? <blockquote>{status}</blockquote> : null}
             {can_write_private_message ? <button className='action-btn'>Write Message</button> : null}
@@ -90,15 +92,16 @@ class User extends React.Component<IProps, IState> {
               : null}
           </div>
         </div>
-        <Posts token={this.props.token} userId={this.props.user.id} />
+        <Posts token={this.props.token} userId={this.props.user.id}/>
       </div>
     );
   }
+
   aboutClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (!this.state.about) (e.target as HTMLAnchorElement).text = 'Less information ' + String.fromCharCode(0xFE40);
     else (e.target as HTMLAnchorElement).text = 'More information >';
-    this.setState({ about: !this.state.about });
+    this.setState({about: !this.state.about});
     if (!this.state.friends) {
       API.friends.get(this.props.token, {
         count: 4,
@@ -108,20 +111,21 @@ class User extends React.Component<IProps, IState> {
         user_id: this.props.user.id
       }).then(res => {
         console.log('#USER > Fetch default friends', res, new Date(Date.now()).toLocaleString());
-        this.setState({ friends: res });
+        this.setState({friends: res});
       });
     }
-  }
+  };
+
   renderFriends = () => {
     if (this.state.friends) {
       return this.state.friends.items.map(friend => (
         <div key={friend.id} className='friend-list-item'>
-          <img src={friend.photo_50} />
+          <img src={friend.photo_50}/>
           <p>{`${friend.first_name} ${friend.last_name}`}</p>
         </div>
       ));
-    } else null;
-  }
+    } else return null;
+  };
 }
 
 

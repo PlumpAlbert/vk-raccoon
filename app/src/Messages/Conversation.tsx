@@ -55,8 +55,8 @@ export default class Conversations extends React.Component<{ token: string }, IS
   }
   shouldComponentUpdate(nextProps: { token: string }, nextState: IState) {
     if (nextState.loading) return false;
-    if (nextState !== this.state) return true;
-    return false;
+    return nextState !== this.state;
+
   }
   render() {
     if (this.state.loading) return;
