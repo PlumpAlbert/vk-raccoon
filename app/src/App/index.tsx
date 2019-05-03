@@ -28,9 +28,11 @@ class App extends React.PureComponent<TStateProps, IState> {
     return (
       <div className='app'>
         <div className='app-header'>
-          <img className='app-header-logo' src={icon} alt='raccoon.icon'
-               onClick={() => this.setState({showMenu: !this.state.showMenu})}/>
-          <h1>VK Raccoon</h1>
+          <div className='app-header-logo'>
+            <img className='app-header' src={icon} alt='raccoon.icon'
+                 onClick={() => this.setState({showMenu: !this.state.showMenu})}/>
+            <h2>VK Raccoon</h2>
+          </div>
           <div className='app-header-user'>
             <img src={user.photo_100} alt='user.image'/>
           </div>

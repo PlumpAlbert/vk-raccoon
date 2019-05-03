@@ -13,7 +13,7 @@
   margin: 16px 16px 0;
   background: white;
   color: hsl(0, 0%, 5%);
-  box-shadow: 0 2px 4px hsla(0, 0%, 50%, 0.8);
+  box-shadow: 3px 3px 4px hsla(0, 0%, 70%, 0.4);
   line-height: 1.5rem;
 }
 .post-inner {
