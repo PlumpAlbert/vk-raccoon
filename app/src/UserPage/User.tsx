@@ -57,12 +57,9 @@ class User extends React.Component<IProps, IState> {
       friend_status
     } = this.props.user;
 
-    let friendButton = null;
-    if (friend_status) {
-      friendButton = <button className='action-btn'> {
-        friend_status === FriendStatus.Friend ? "Remove from friend list" : "Add to friend list"
-      } </button>;
-    }
+    let friendButton = <button className='action-btn'> {
+      friend_status === FriendStatus.Friend ? "Remove from friend list" : "Add to friend list"
+    } </button>;
 
     return (
       <div className='user'>
