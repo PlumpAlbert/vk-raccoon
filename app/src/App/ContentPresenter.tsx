@@ -28,7 +28,7 @@ class ContentPresenter extends React.Component<TStateProps> {
         const Arthur = 310543856;
         return UserPage(Anya, token);
       case Pages.News:
-        return <NewsFeed token={token} />;
+        return <NewsFeed token={token} post_count={10} update_count={5} />;
       case Pages.Notifications:
         return <Dev />;
       case Pages.Messages:

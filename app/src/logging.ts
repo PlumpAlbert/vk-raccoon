@@ -10,7 +10,7 @@ export const infoLog = (componentName: string) => {
   return (...args: any[]) => {
     args.push(new Date(Date.now()).toLocaleTimeString());
     console.info.apply(console, [
-      `%c${componentName} @ ${new Date(Date.now()).toLocaleTimeString()} >`, 'color: DEEPSKYBLUE',
+      `%c${componentName} @ ${new Date(Date.now()).toLocaleTimeString()} >`, 'color: ROYALBLUE',
       ...args
     ]);
   };
