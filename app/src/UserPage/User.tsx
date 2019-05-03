@@ -1,10 +1,10 @@
 import React from "react";
-import { IUser, FriendStatus } from "../API/objects";
+import { IUser, FriendStatus, Sex } from "../API/objects";
 import { IResponse as IFriends, Order } from '../API/friends/get';
 import Posts from "./UserPosts";
 import API from "../API";
 import { Log } from "../logging";
-import './UserPage.css';
+import './User.css';
 
 const log = Log('User');
 
@@ -92,7 +92,8 @@ class User extends React.Component<IProps, IState> {
               : null}
           </div>
         </div>
-        <Posts token={this.props.token} userId={this.props.user.id}/>
+        <Posts token={this.props.token} userId={this.props.user.id}
+               userSex={this.props.user.sex ? this.props.user.sex : Sex.undefined}/>
       </div>
     );
   }

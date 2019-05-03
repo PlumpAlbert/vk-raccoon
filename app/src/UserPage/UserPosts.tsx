@@ -1,8 +1,12 @@
 import * as React from "react";
 import Post from "../Post";
 import API from "../API";
-import { IGroup, IUser } from "../API/objects";
+import { IGroup, IUser, Sex } from "../API/objects";
 import { Log, errorLog } from "../logging";
+import { FetchError } from "../API/types";
+
+import './UserPosts.css'
+import raccoon_glasses from './assets/raccoon-glasses.png';
 
 const log = Log("Posts");
 const error = errorLog("Posts");
@@ -10,7 +14,9 @@ const error = errorLog("Posts");
 interface IProps {
   token: string;
   userId: number;
+  userSex: Sex;
 }
+
 interface IState {
   loading: boolean;
   offset: number;
@@ -22,7 +28,7 @@ interface IState {
 class Posts extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    let { token, userId } = props;
+    let {token, userId, userSex} = props;
     this.state = {
       loading: true,
       offset: 0,
@@ -39,7 +45,27 @@ class Posts extends React.Component<IProps, IState> {
         fields: ["photo_100"]
       })
       .then(res => {
-        if (!res) return error('Response is undefined');
+        if (res instanceof FetchError) {
+          let err = res as FetchError;
+          if (err.error_code === 30) {
+            log('Error fetching: Private account');
+            this.setState({
+              loading: false,
+              end: true,
+              posts: [
+                <div className='private-wall' key='private-wall'>
+                  <img src={raccoon_glasses} alt='raccoon.security'/>
+                  <h1>Oooops!</h1>
+                  <p>
+                    This raccoon is too shy to show his home for strangers!<br/>
+                    If you want to see it make sure to send {userSex === Sex.female ? 'her' : 'him'} a friend request
+                  </p>
+                </div>
+              ]
+            });
+            return;
+          }
+        }
         log("Fetched initial posts", res.items);
         this.setState({
           loading: false,
@@ -78,9 +104,10 @@ class Posts extends React.Component<IProps, IState> {
         });
       });
   }
+
   shouldComponentUpdate(newProps: IProps, newState: IState) {
-    let { loading: newLoading, ...newStateProps } = newState;
-    let { loading: prevLoading, ...prevStateProps } = this.state;
+    let {loading: newLoading, ...newStateProps} = newState;
+    let {loading: prevLoading, ...prevStateProps} = this.state;
     if (newLoading !== prevLoading) {
       let prevS = prevStateProps as any;
       let newS = newStateProps as any;
@@ -105,75 +132,77 @@ class Posts extends React.Component<IProps, IState> {
     }
     return false;
   }
+
   componentDidUpdate() {
     let node = document.querySelector("div.post-wrapper");
-    if (node) {
-      let posts = node.getElementsByClassName("post");
-      const maxScroll =
-        node.scrollHeight - posts[posts.length - 1].clientHeight;
-      if (node.clientHeight <= maxScroll / 2) return;
-      this.setState({ loading: true });
-      API.wall.get({
-        token: this.props.token,
-        owner_id: this.props.userId,
-        count: 5,
-        offset: this.state.offset,
-        extended: true,
-        fields: ["photo_100"]
-      }).then(res => {
-        if (!res) return error('Response is undefined');
-        log("Appending initial posts", res.items);
-        this.setState({
-          offset: this.state.offset + res.items.length,
-          postCount: this.state.postCount + res.items.length,
-          loading: false,
-          end: res.count === this.state.offset + res.items.length - 1,
-          posts: [
-            ...this.state.posts,
-            ...res.items.map(post => {
-              let sources: any[] = [];
-              if (post.copy_history) {
-                sources = post.copy_history.map(repost => {
-                  if (repost.from_id >= 0)
-                    return {
-                      type: "IUser",
-                      data: res.profiles.find(
-                        user => user.id === repost.from_id
-                      ) as IUser
-                    };
+    if (!node) return;
+    let posts = node.getElementsByClassName("post");
+    if (posts.length === 0) return;
+    const maxScroll =
+      node.scrollHeight - posts[posts.length - 1].clientHeight;
+    if (node.clientHeight <= maxScroll / 2) return;
+    this.setState({loading: true});
+    API.wall.get({
+      token: this.props.token,
+      owner_id: this.props.userId,
+      count: 5,
+      offset: this.state.offset,
+      extended: true,
+      fields: ["photo_100"]
+    }).then(res => {
+      if (!res) return error('Response is undefined');
+      log("Appending initial posts", res.items);
+      this.setState({
+        offset: this.state.offset + res.items.length,
+        postCount: this.state.postCount + res.items.length,
+        loading: false,
+        end: res.count === this.state.offset + res.items.length - 1,
+        posts: [
+          ...this.state.posts,
+          ...res.items.map(post => {
+            let sources: any[] = [];
+            if (post.copy_history) {
+              sources = post.copy_history.map(repost => {
+                if (repost.from_id >= 0)
                   return {
-                    type: "IGroup",
-                    data: res.groups.find(
-                      group => group.id === -repost.from_id
-                    ) as IGroup
+                    type: "IUser",
+                    data: res.profiles.find(
+                      user => user.id === repost.from_id
+                    ) as IUser
                   };
-                });
-              }
-              return (
-                <Post
-                  key={post.id}
-                  data={post}
-                  sources={sources}
-                  user={res.profiles.find(user => user.id === post.from_id)}
-                  group={res.groups.find(group => group.id === post.from_id)}
-                />
-              );
-            })
-          ]
-        });
+                return {
+                  type: "IGroup",
+                  data: res.groups.find(
+                    group => group.id === -repost.from_id
+                  ) as IGroup
+                };
+              });
+            }
+            return (
+              <Post
+                key={post.id}
+                data={post}
+                sources={sources}
+                user={res.profiles.find(user => user.id === post.from_id)}
+                group={res.groups.find(group => group.id === post.from_id)}
+              />
+            );
+          })
+        ]
       });
-    }
+    });
   }
+
   onScroll = (e: React.UIEvent<HTMLDivElement>) => {
     if (this.state.loading) return;
-    let { offset, postCount } = this.state;
+    let {offset, postCount} = this.state;
     const target = e.currentTarget;
     let posts = target.getElementsByClassName("post");
     const maxScroll = target.scrollHeight - posts[posts.length - 1].clientHeight;
     let scrollHeight = target.clientHeight + target.scrollTop;
     if (scrollHeight > maxScroll) {
       if (this.state.end) return;
-      this.setState({ loading: true });
+      this.setState({loading: true});
       API.wall.get({
         token: this.props.token,
         owner_id: this.props.userId,
@@ -224,7 +253,7 @@ class Posts extends React.Component<IProps, IState> {
       });
     }
     if (target.scrollTop < posts[0].clientHeight && offset > postCount + 1) {
-      this.setState({ loading: true });
+      this.setState({loading: true});
       let count = offset - postCount < 5 ? offset - postCount : 5;
       API.wall.get({
         token: this.props.token,
@@ -276,8 +305,9 @@ class Posts extends React.Component<IProps, IState> {
       });
     }
   };
+
   render() {
-    let { posts } = this.state;
+    let {posts} = this.state;
     log("Rendering");
     return (
       <div className="post-wrapper" onScroll={this.onScroll}>

@@ -1,11 +1,3 @@
-.post-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-}
 .post {
   box-sizing: border-box;
   width: 600px;
