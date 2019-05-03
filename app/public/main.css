@@ -1,6 +1,30 @@
 @font-face {
-  font-family: 'Emoji';
-  src: url('./webfonts/NotoColorEmoji.ttf')
+  font-family: "Emoji";
+  src: url("./webfonts/NotoColorEmoji.ttf");
+}
+@font-face {
+  font-family: "Google Sans";
+  src: url("./webfonts/GoogleSans-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Google Sans";
+  src: url("./webfonts/GoogleSans-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Google Sans";
+  src: url("./webfonts/GoogleSans-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Google Sans";
+  src: url("./webfonts/GoogleSans-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
 }
 
 html,
@@ -8,7 +32,8 @@ body,
 div#root {
   margin: 0;
   padding: 0;
-  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands", "Google Sans", 'Emoji';
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands", "Google Sans",
+    "Emoji";
   font-size: 12px;
   color: hsl(0, 0%, 5%);
   -webkit-font-smoothing: antialiased;
@@ -16,5 +41,6 @@ div#root {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
