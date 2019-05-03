@@ -11,7 +11,7 @@ import { setUser } from "./store/account/actions";
 import api from "./API";
 // import * as serviceWorker from "./serviceWorker";
 
-let { ipcRenderer } = (window as any).require("electron");
+let {ipcRenderer} = (window as any).require("electron");
 ipcRenderer.send('token');
 ipcRenderer.on("token", (e: any, token: string) => {
   const store = createStore(
@@ -22,18 +22,20 @@ ipcRenderer.on("token", (e: any, token: string) => {
     )
   );
   store.dispatch(setToken(token));
-  api.users.get({ token: token, fields: ["status"] }).then(res => {
-    let { id, first_name, maiden_name, last_name, status } = res[0];
+  api.users.get({token: token, fields: ["status", "photo_100"]}).then(res => {
+    let {id, first_name, maiden_name, last_name, status, photo_100} = res[0];
     store.dispatch(
       setUser({
         id: id,
         name: `${first_name} ${maiden_name ? `(${maiden_name})` : ""} ${last_name}`,
+        short_name: first_name,
+        photo_100: photo_100 ? photo_100 : "",
         status: status ? status : ""
       })
     );
     ReactDOM.render(
       <Provider store={store}>
-        <App />
+        <App/>
       </Provider>,
       document.getElementById("root")
     );

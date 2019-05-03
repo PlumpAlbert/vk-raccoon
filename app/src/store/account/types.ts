@@ -8,8 +8,12 @@ export enum ActionTypes {
 export interface IAccountState {
   /** Идентификатор пользователя */
   id: number;
-  /** Имя текущего пользователя */
+  /** Полное имя текущего пользователя */
   name: string;
+  /** Имя текущего пользователя */
+  short_name: string;
+  /** Фотография пользователя 100x100 px */
+  photo_100: string;
   /** Статус пользователя */
   status: string;
 }
