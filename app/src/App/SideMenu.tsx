@@ -98,6 +98,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({onMenuItemClick, prevPage, vi
             className={`${prevPage === Pages[v] ? "active" : ""} menu-entry`}
             id={v}
             onClick={onMenuItemClick}
+            key={v}
           >
             <span className={icon}/>
             <span className='menu-entry-text'>{v}</span>
@@ -105,56 +106,6 @@ export const SideMenu: React.FC<SideMenuProps> = ({onMenuItemClick, prevPage, vi
         );
       })
     }
-    {/*<span*/}
-    {/*className={`${prevPage === Pages.News ? "active" : ""} menu-entry fa fa-newspaper`}*/}
-    {/*id='News'*/}
-    {/*onClick={onMenuItemClick}*/}
-    {/*/>*/}
-    {/*<span*/}
-    {/*className={`${prevPage === Pages.Notifications ? "active" : ""} menu-entry fa fa-bell`}*/}
-    {/*id='Notifications'*/}
-    {/*onClick={onMenuItemClick}*/}
-    {/*/>*/}
-    {/*<span*/}
-    {/*className={`${prevPage === Pages.Messages ? "active" : ""} menu-entry fa fa-envelope-open`}*/}
-    {/*id='Messages'*/}
-    {/*onClick={onMenuItemClick}*/}
-    {/*/>*/}
-    {/*<span*/}
-    {/*className={`${prevPage === Pages.Friends ? "active" : ""} menu-entry fa fa-user`}*/}
-    {/*id='Friends'*/}
-    {/*onClick={onMenuItemClick}*/}
-    {/*/>*/}
-    {/*<span*/}
-    {/*className={`${prevPage === Pages.Groups ? "active" : ""} menu-entry fa fa-users`}*/}
-    {/*id='Groups'*/}
-    {/*onClick={onMenuItemClick}*/}
-    {/*/>*/}
-    {/*<span*/}
-    {/*className={`${prevPage === Pages.Pictures ? "active" : ""} menu-entry fa fa-images`}*/}
-    {/*id='Pictures'*/}
-    {/*onClick={onMenuItemClick}*/}
-    {/*/>*/}
-    {/*<span*/}
-    {/*className={`${prevPage === Pages.Videos ? "active" : ""} menu-entry fa fa-video`}*/}
-    {/*id='Videos'*/}
-    {/*onClick={onMenuItemClick}*/}
-    {/*/>*/}
-    {/*<span*/}
-    {/*className={`${prevPage === Pages.Bookmarks ? "active" : ""} menu-entry fa fa-bookmark`}*/}
-    {/*id='Bookmarks'*/}
-    {/*onClick={onMenuItemClick}*/}
-    {/*/>*/}
-    {/*<span*/}
-    {/*className={`${prevPage === Pages.Documents ? "active" : ""} menu-entry fa fa-file`}*/}
-    {/*id='Documents'*/}
-    {/*onClick={onMenuItemClick}*/}
-    {/*/>*/}
-    {/*<span*/}
-    {/*className={`${prevPage === Pages.Settings ? "active" : ""} menu-entry fa fa-cog`}*/}
-    {/*id='Settings'*/}
-    {/*onClick={onMenuItemClick}*/}
-    {/*/>*/}
   </div>
 );
 
