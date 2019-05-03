@@ -21,7 +21,8 @@ const ContentPresenter = React.memo(({activePage, user_id, token}: IProps) => {
       const Kate = 445367510;
       const Anya = 228116662;
       const Arthur = 310543856;
-      return UserPage(Anya, token);
+      const Raccoon = 424825704;
+      return UserPage(Raccoon, token);
     case Pages.News:
       return <NewsFeed token={token} post_count={50} update_count={20}/>;
     case Pages.Notifications:
