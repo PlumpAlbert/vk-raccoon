@@ -6,6 +6,10 @@ import { IGlobalStore } from "../store";
 import "./css/SideMenu.css";
 import { Log } from "../logging";
 
+type TOwnProps = {
+  visible: boolean;
+}
+
 type TStateProps = {
   prevPage: Pages;
 };
@@ -13,20 +17,23 @@ type TDispatchProps = {
   activatePage: (newPage: Pages) => void;
 };
 
-export type SideMenuProps = TStateProps &
+export type SideMenuProps = TOwnProps & TStateProps &
   TDispatchProps & {
-    onMenuItemClick: React.EventHandler<React.MouseEvent<HTMLElement>>;
-  };
+  onMenuItemClick: React.EventHandler<React.MouseEvent<HTMLElement>>;
+};
 
-const mapStateToProps: MapStateToProps<TStateProps, {}, IGlobalStore> = ({ app }) => ({
-  prevPage: app.activePage
+const mapStateToProps: MapStateToProps<TStateProps, TOwnProps, IGlobalStore> = ({app}, {visible}) => ({
+  prevPage: app.activePage,
+  visible
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<TDispatchProps, {}> = dispatch => ({
-  activatePage: newPage => dispatch(changePage(newPage))
+const mapDispatchToProps: MapDispatchToPropsFunction<TDispatchProps, TOwnProps> = (dispatch, {visible}) => ({
+  activatePage: newPage => dispatch(changePage(newPage)),
+  visible
 });
 
-const mergeProps: MergeProps<TStateProps, TDispatchProps, {}, SideMenuProps> = ({ prevPage }, { activatePage }) => ({
+const mergeProps: MergeProps<TStateProps, TDispatchProps, TOwnProps, SideMenuProps> = ({prevPage}, {activatePage}, {visible}) => ({
+  visible,
   prevPage,
   activatePage,
   onMenuItemClick: function (e) {
@@ -44,63 +51,110 @@ const mergeProps: MergeProps<TStateProps, TDispatchProps, {}, SideMenuProps> = (
   }
 });
 
-export const SideMenu: React.FC<SideMenuProps> = ({ onMenuItemClick, prevPage }) => (
-  <div className='side-menu'>
-    <span
-      className={`${prevPage === Pages.Home ? "active" : ""} menu-entry fa fa-home`}
-      id='Home'
-      onClick={onMenuItemClick}
-    />
-    <span
-      className={`${prevPage === Pages.News ? "active" : ""} menu-entry fa fa-newspaper`}
-      id='News'
-      onClick={onMenuItemClick}
-    />
-    <span
-      className={`${prevPage === Pages.Notifications ? "active" : ""} menu-entry fa fa-bell`}
-      id='Notifications'
-      onClick={onMenuItemClick}
-    />
-    <span
-      className={`${prevPage === Pages.Messages ? "active" : ""} menu-entry fa fa-envelope-open`}
-      id='Messages'
-      onClick={onMenuItemClick}
-    />
-    <span
-      className={`${prevPage === Pages.Friends ? "active" : ""} menu-entry fa fa-user`}
-      id='Friends'
-      onClick={onMenuItemClick}
-    />
-    <span
-      className={`${prevPage === Pages.Groups ? "active" : ""} menu-entry fa fa-users`}
-      id='Groups'
-      onClick={onMenuItemClick}
-    />
-    <span
-      className={`${prevPage === Pages.Pictures ? "active" : ""} menu-entry fa fa-images`}
-      id='Pictures'
-      onClick={onMenuItemClick}
-    />
-    <span
-      className={`${prevPage === Pages.Videos ? "active" : ""} menu-entry fa fa-video`}
-      id='Videos'
-      onClick={onMenuItemClick}
-    />
-    <span
-      className={`${prevPage === Pages.Bookmarks ? "active" : ""} menu-entry fa fa-bookmark`}
-      id='Bookmarks'
-      onClick={onMenuItemClick}
-    />
-    <span
-      className={`${prevPage === Pages.Documents ? "active" : ""} menu-entry fa fa-file`}
-      id='Documents'
-      onClick={onMenuItemClick}
-    />
-    <span
-      className={`${prevPage === Pages.Settings ? "active" : ""} menu-entry fa fa-cog`}
-      id='Settings'
-      onClick={onMenuItemClick}
-    />
+export const SideMenu: React.FC<SideMenuProps> = ({onMenuItemClick, prevPage, visible}) => (
+  <div className={`side-menu${visible ? '' : ' hidden'}`}>
+    {
+      Object.keys(Pages).map(v => {
+        if (!isNaN(parseInt(v))) return;
+        let icon = 'menu-entry-icon fa ';
+        switch (v) {
+          case Pages[Pages.Home]:
+            icon += 'fa-home';
+            break;
+          case Pages[Pages.News]:
+            icon += 'fa-newspaper';
+            break;
+          case Pages[Pages.Notifications]:
+            icon += 'fa-bell';
+            break;
+          case Pages[Pages.Messages]:
+            icon += 'fa-envelope-open';
+            break;
+          case Pages[Pages.Friends]:
+            icon += 'fa-user';
+            break;
+          case Pages[Pages.Groups]:
+            icon += 'fa-users';
+            break;
+          case Pages[Pages.Pictures]:
+            icon += 'fa-images';
+            break;
+          case Pages[Pages.Videos]:
+            icon += 'fa-video';
+            break;
+          case Pages[Pages.Bookmarks]:
+            icon += 'fa-bookmark';
+            break;
+          case Pages[Pages.Documents]:
+            icon += 'fa-file';
+            break;
+          case Pages[Pages.Settings]:
+            icon += 'fa-cog';
+            break;
+        }
+        return (
+          <div
+            //@ts-ignore
+            className={`${prevPage === Pages[v] ? "active" : ""} menu-entry`}
+            id={v}
+            onClick={onMenuItemClick}
+          >
+            <span className={icon}/>
+            <span className='menu-entry-text'>{v}</span>
+          </div>
+        );
+      })
+    }
+    {/*<span*/}
+    {/*className={`${prevPage === Pages.News ? "active" : ""} menu-entry fa fa-newspaper`}*/}
+    {/*id='News'*/}
+    {/*onClick={onMenuItemClick}*/}
+    {/*/>*/}
+    {/*<span*/}
+    {/*className={`${prevPage === Pages.Notifications ? "active" : ""} menu-entry fa fa-bell`}*/}
+    {/*id='Notifications'*/}
+    {/*onClick={onMenuItemClick}*/}
+    {/*/>*/}
+    {/*<span*/}
+    {/*className={`${prevPage === Pages.Messages ? "active" : ""} menu-entry fa fa-envelope-open`}*/}
+    {/*id='Messages'*/}
+    {/*onClick={onMenuItemClick}*/}
+    {/*/>*/}
+    {/*<span*/}
+    {/*className={`${prevPage === Pages.Friends ? "active" : ""} menu-entry fa fa-user`}*/}
+    {/*id='Friends'*/}
+    {/*onClick={onMenuItemClick}*/}
+    {/*/>*/}
+    {/*<span*/}
+    {/*className={`${prevPage === Pages.Groups ? "active" : ""} menu-entry fa fa-users`}*/}
+    {/*id='Groups'*/}
+    {/*onClick={onMenuItemClick}*/}
+    {/*/>*/}
+    {/*<span*/}
+    {/*className={`${prevPage === Pages.Pictures ? "active" : ""} menu-entry fa fa-images`}*/}
+    {/*id='Pictures'*/}
+    {/*onClick={onMenuItemClick}*/}
+    {/*/>*/}
+    {/*<span*/}
+    {/*className={`${prevPage === Pages.Videos ? "active" : ""} menu-entry fa fa-video`}*/}
+    {/*id='Videos'*/}
+    {/*onClick={onMenuItemClick}*/}
+    {/*/>*/}
+    {/*<span*/}
+    {/*className={`${prevPage === Pages.Bookmarks ? "active" : ""} menu-entry fa fa-bookmark`}*/}
+    {/*id='Bookmarks'*/}
+    {/*onClick={onMenuItemClick}*/}
+    {/*/>*/}
+    {/*<span*/}
+    {/*className={`${prevPage === Pages.Documents ? "active" : ""} menu-entry fa fa-file`}*/}
+    {/*id='Documents'*/}
+    {/*onClick={onMenuItemClick}*/}
+    {/*/>*/}
+    {/*<span*/}
+    {/*className={`${prevPage === Pages.Settings ? "active" : ""} menu-entry fa fa-cog`}*/}
+    {/*id='Settings'*/}
+    {/*onClick={onMenuItemClick}*/}
+    {/*/>*/}
   </div>
 );
 

@@ -1,31 +1,48 @@
 .side-menu {
   display: flex;
-  transition: width .25s ease-in, display .25s ease-in;
+  position: absolute;
   flex-direction: column;
-  text-align: center;
   align-items: center;
   justify-content: flex-end;
-  width: 48px;
-  height: 100vh;
   background: hsl(0, 0%, 95%);
   color: hsl(0, 0%, 20%);
+  height: inherit;
+  z-index: 1;
+  transition: all .25s ease-in;
+}
+
+.side-menu.hidden {
+  width: 0;
+}
+
+.side-menu.hidden * {
+  display: none;
 }
 
 .menu-entry {
   transition: all .1s ease-in;
+  font-family: inherit;
+  font-style: normal;
   display: flex;
   width: 100%;
   box-sizing: border-box;
-  min-height: 48px;
-  flex: 1 1 48px;
-  font-size: 24px;
-  justify-content: center;
+  flex: 1;
   align-items: center;
-  padding: 10px 0;
+  padding: 8px 12px;
 }
 
-.menu-entry:before {
-  transition: all .1s ease-in;
+.menu-entry-icon {
+  width: 25px;
+  text-align: center;
+}
+.menu-entry-icon:before {
+  font-size: 16px;
+}
+
+.menu-entry-text {
+  font-size: 12px;
+  text-align: left;
+  padding: 4px 0 4px 12px;
 }
 
 .menu-entry:hover {
