@@ -1,6 +1,50 @@
 .app {
+  min-width: 100vw;
+  max-height: 100vh;
   width: 100vw;
   height: 100vh;
-  display: flex;
   overflow: hidden;
+}
+
+.app-header {
+  background: hsl(0, 0%, 23%);
+  color: hsl(0, 0%, 95%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  height: 48px;
+  width: 100%;
+  z-index: 1;
+}
+
+.app-header img {
+  height: 100%;
+  margin: 0 28px;
+}
+
+.app-header-logo {
+  float: left;
+}
+
+.app-header > h1 {
+  margin: 0;
+  display: inline-block;
+}
+
+.app-header-user {
+  height: 100%;
+  float: right;
+  display: flex;
+  align-items: center;
+}
+
+.app-header-user > img {
+  object-fit: contain;
+  border-radius: 100%;
+}
+
+.app-content {
+  display: flex;
+  height: calc(100% - 48px);
 }
