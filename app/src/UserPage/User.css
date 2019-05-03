@@ -9,11 +9,11 @@
 
 .user-info {
   display: flex;
-  background: hsl(0, 0%, 99%);
+  background: hsl(0, 0%, 95%);
   width: 300px;
   flex-direction: column;
   align-content: center;
-  box-shadow: 0 0 12px hsla(0, 0%, 80%, 0.6);
+  box-shadow: 3px 0 1px hsla(0, 0%, 60%, 0.25);
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -31,6 +31,7 @@
   width: 100%;
   max-width: 200px;
   border-radius: 100%;
+  border: 3px solid hsl(0, 0%, 24%);
 }
 
 .user-wrapper > h3 {
@@ -42,24 +43,10 @@
 
 .user-wrapper > blockquote {
   word-wrap: break-word;
-  position: relative;
-  width: calc(100% - 48px);
-  background-color: hsl(0, 0%, 95%);
-  color: hsl(0, 0%, 60%);
-  border-left: 3px solid black;
-  margin: 16px 0;
-  padding: 12px 24px;
-  line-height: 1.5;
+  color: hsl(0, 0%, 45%);
+  margin: 8px 0 16px;
+  line-height: 1.4;
   font-style: italic;
-}
-
-.user-wrapper > blockquote::before {
-  content: "\201C";
-  font-size: 3em;
-  position: absolute;
-  left: 6px;
-  top: -6px;
-  color: black;
 }
 
 .action-btn {
