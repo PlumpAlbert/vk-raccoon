@@ -17,10 +17,7 @@ type TDispatchProps = {
   activatePage: (newPage: Pages) => void;
 };
 
-export type SideMenuProps = TOwnProps & TStateProps &
-  TDispatchProps & {
-  onMenuItemClick: React.EventHandler<React.MouseEvent<HTMLElement>>;
-};
+export type SideMenuProps = TOwnProps & TStateProps & TDispatchProps;
 
 const mapStateToProps: MapStateToProps<TStateProps, TOwnProps, IGlobalStore> = ({app}, {visible}) => ({
   prevPage: app.activePage,
@@ -32,26 +29,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<TDispatchProps, TOwnProps> 
   visible
 });
 
-const mergeProps: MergeProps<TStateProps, TDispatchProps, TOwnProps, SideMenuProps> = ({prevPage}, {activatePage}, {visible}) => ({
-  visible,
-  prevPage,
-  activatePage,
-  onMenuItemClick: function (e) {
-    log(`Switching to ${e.currentTarget.id}`)
-    // The element that user clicked on
-    let newElement = e.target as HTMLElement;
-    let newPage = Pages[newElement.id as keyof typeof Pages];
-    // If it's the same page - do nothing
-    if (newPage === prevPage) return;
-    // Deactivate previous page and activate new page
-    let prevElement = document.getElementById(`${Pages[prevPage as number]}`) as HTMLElement;
-    prevElement.classList.remove("active");
-    newElement.classList.add("active");
-    activatePage(newPage);
-  }
-});
-
-export const SideMenu: React.FC<SideMenuProps> = ({onMenuItemClick, prevPage, visible}) => (
+export const SideMenu: React.FC<SideMenuProps> = ({activatePage, prevPage, visible}) => (
   <div className={`side-menu${visible ? '' : ' hidden'}`}>
     {
       Object.keys(Pages).map(v => {
@@ -97,7 +75,16 @@ export const SideMenu: React.FC<SideMenuProps> = ({onMenuItemClick, prevPage, vi
             //@ts-ignore
             className={`${prevPage === Pages[v] ? "active" : ""} menu-entry`}
             id={v}
-            onClick={onMenuItemClick}
+            onClick={e => {
+              log(`Switching to ${e.currentTarget.id}`);
+              // The element that user clicked on
+              let newElement = e.currentTarget as HTMLElement;
+              let newPage = Pages[newElement.id as keyof typeof Pages];
+              // If it's the same page - do nothing
+              if (newPage === prevPage) return;
+              // Activate new page
+              activatePage(newPage);
+            }}
             key={v}
           >
             <span className={icon}/>
@@ -113,6 +100,5 @@ const log = Log(SideMenu.name);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
+  mapDispatchToProps
 )(SideMenu);
