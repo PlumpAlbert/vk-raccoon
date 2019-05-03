@@ -1,12 +1,15 @@
 import React from "react";
 import { IUser, FriendStatus, Sex } from "../API/objects";
-import { IResponse as IFriends, Order } from '../API/friends/get';
+import { Order } from '../API/friends/get';
 import Posts from "./UserPosts";
 import API from "../API";
-import { Log } from "../logging";
+import { errorLog, Log } from "../logging";
 import './User.css';
+import { FetchError } from "../API/types";
+import raccoon_glasses from "./assets/raccoon-glasses.png";
 
 const log = Log('User');
+const error = errorLog('User');
 
 interface IProps {
   user: IUser;
@@ -15,37 +18,21 @@ interface IProps {
 
 interface IState {
   about: boolean;
-  offset: number;
-  friends: IFriends | null;
+  friends: IUser[] | null;
 }
 
 class User extends React.Component<IProps, IState> {
   state: IState = {
     about: false,
-    offset: 0,
     friends: null
   };
 
   shouldComponentUpdate(newProps: IProps, newState: IState) {
     if (newState.about !== this.state.about) return true;
-    if (newState.friends !== this.state.friends) return true;
-    if (newState.offset !== this.state.offset) {
-      API.friends.get(this.props.token, {
-        count: 4,
-        order: Order.hints,
-        fields: ["photo_50", "online"],
-        offset: newState.offset,
-        user_id: this.props.user.id
-      }).then(res => {
-        log('Fetched new friends', res);
-        this.setState({friends: res});
-      });
-    }
-    return false;
+    return newState.friends !== this.state.friends;
   }
 
   render() {
-    log('Rendering');
     let {
       first_name,
       last_name,
@@ -54,8 +41,11 @@ class User extends React.Component<IProps, IState> {
       status,
       can_write_private_message,
       can_send_friend_request,
-      friend_status
+      friend_status,
+      is_closed,
+      sex
     } = this.props.user;
+    log('Rendering');
 
     let friendButton = <button className='action-btn'> {
       friend_status === FriendStatus.Friend ? "Remove from friend list" : "Add to friend list"
@@ -71,26 +61,35 @@ class User extends React.Component<IProps, IState> {
             {can_write_private_message ? <button className='action-btn'>Write Message</button> : null}
             {can_send_friend_request || friend_status === FriendStatus.Friend ? friendButton : null}
             {friend_status === FriendStatus.OutRequest ? <span>{first_name} sent you a friend request</span> : null}
-            <a
-              className="about"
-              onClick={this.aboutClick}
-            >More information ></a>
-            {this.state.about ?
-              <div className="about-content">
-                <div className='about-friends'>
-                  <p>Friends</p>
-                  <div className='friend-list'>
-                    {
-                      this.renderFriends()
-                    }
-                  </div>
+            {
+              is_closed ? null :
+                <a className="about" onClick={this.aboutClick}>
+                  More information >
+                </a>
+            }
+            {
+              this.state.about ?
+                <div className="about-content">
+                  {this.renderFriends()}
                 </div>
-              </div>
-              : null}
+                : null
+            }
           </div>
         </div>
-        <Posts token={this.props.token} userId={this.props.user.id}
-               userSex={this.props.user.sex ? this.props.user.sex : Sex.undefined}/>
+        {
+          !is_closed
+            ? <Posts token={this.props.token} userId={this.props.user.id}/>
+            : (
+              <div className='private-wall' key='private-wall'>
+                <img src={raccoon_glasses} alt='raccoon.security'/>
+                <h1>Oooops!</h1>
+                <p>
+                  This raccoon is too shy to show his home for strangers!<br/>
+                  If you want to see it make sure to send {sex === Sex.female ? 'her' : 'him'} a friend request
+                </p>
+              </div>
+            )
+        }
       </div>
     );
   }
@@ -105,23 +104,38 @@ class User extends React.Component<IProps, IState> {
         count: 4,
         order: Order.hints,
         fields: ["photo_50", "online"],
-        offset: this.state.offset,
         user_id: this.props.user.id
       }).then(res => {
-        console.log('#USER > Fetch default friends', res, new Date(Date.now()).toLocaleString());
-        this.setState({friends: res});
+        let friends: IUser[] | null = null;
+        if (res instanceof FetchError) {
+          let err = res as FetchError;
+          error(err.error_msg, err.error_code);
+        } else {
+          log('Fetch default friends', res);
+          friends = res.items;
+        }
+        this.setState({friends});
       });
     }
   };
 
   renderFriends = () => {
     if (this.state.friends) {
-      return this.state.friends.items.map(friend => (
-        <div key={friend.id} className='friend-list-item'>
-          <img src={friend.photo_50}/>
-          <p>{`${friend.first_name} ${friend.last_name}`}</p>
+      return (
+        <div className='about-friends'>
+          <p>Friends</p>
+          <div className='friend-list'>
+            {
+              this.state.friends.map(friend => (
+                <div key={friend.id} className='friend-list-item'>
+                  <img src={friend.photo_50} alt='friend.image'/>
+                  <p>{`${friend.first_name} ${friend.last_name}`}</p>
+                </div>
+              ))
+            }
+          </div>
         </div>
-      ));
+      );
     } else return null;
   };
 }

@@ -31,7 +31,8 @@ export default function UserPage(userId: number, token: string) {
           "can_write_private_message",
           "status",
           "sex",
-          "photo_200"
+          "photo_200",
+          'is_closed'
         ]
       }).then(users => {
         if (users instanceof FetchError) {

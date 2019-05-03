@@ -1,12 +1,11 @@
 import * as React from "react";
 import Post from "../Post";
 import API from "../API";
-import { IGroup, IUser, Sex } from "../API/objects";
+import { IGroup, IUser } from "../API/objects";
 import { Log, errorLog } from "../logging";
 import { FetchError } from "../API/types";
 
 import './UserPosts.css'
-import raccoon_glasses from './assets/raccoon-glasses.png';
 
 const log = Log("Posts");
 const error = errorLog("Posts");
@@ -14,7 +13,6 @@ const error = errorLog("Posts");
 interface IProps {
   token: string;
   userId: number;
-  userSex: Sex;
 }
 
 interface IState {
@@ -28,7 +26,7 @@ interface IState {
 class Posts extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    let {token, userId, userSex} = props;
+    let {token, userId} = props;
     this.state = {
       loading: true,
       offset: 0,
@@ -47,61 +45,44 @@ class Posts extends React.Component<IProps, IState> {
       .then(res => {
         if (res instanceof FetchError) {
           let err = res as FetchError;
-          if (err.error_code === 30) {
-            log('Error fetching: Private account');
-            this.setState({
-              loading: false,
-              end: true,
-              posts: [
-                <div className='private-wall' key='private-wall'>
-                  <img src={raccoon_glasses} alt='raccoon.security'/>
-                  <h1>Oooops!</h1>
-                  <p>
-                    This raccoon is too shy to show his home for strangers!<br/>
-                    If you want to see it make sure to send {userSex === Sex.female ? 'her' : 'him'} a friend request
-                  </p>
-                </div>
-              ]
-            });
-            return;
-          }
-        }
-        log("Fetched initial posts", res.items);
-        this.setState({
-          loading: false,
-          offset: res.items.length,
-          postCount: res.items.length,
-          end: res.count === res.items.length,
-          posts: res.items.map(post => {
-            let sources: any[] = [];
-            if (post.copy_history) {
-              sources = post.copy_history.map(repost => {
-                if (repost.from_id >= 0)
+        } else {
+          log("Fetched initial posts", res.items);
+          this.setState({
+            loading: false,
+            offset: res.items.length,
+            postCount: res.items.length,
+            end: res.count === res.items.length,
+            posts: res.items.map(post => {
+              let sources: any[] = [];
+              if (post.copy_history) {
+                sources = post.copy_history.map(repost => {
+                  if (repost.from_id >= 0)
+                    return {
+                      type: "IUser",
+                      data: res.profiles.find(
+                        user => user.id === repost.from_id
+                      ) as IUser
+                    };
                   return {
-                    type: "IUser",
-                    data: res.profiles.find(
-                      user => user.id === repost.from_id
-                    ) as IUser
+                    type: "IGroup",
+                    data: res.groups.find(
+                      group => group.id === -repost.from_id
+                    ) as IGroup
                   };
-                return {
-                  type: "IGroup",
-                  data: res.groups.find(
-                    group => group.id === -repost.from_id
-                  ) as IGroup
-                };
-              });
-            }
-            return (
-              <Post
-                key={post.id}
-                data={post}
-                sources={sources}
-                user={res.profiles.find(user => user.id === post.from_id)}
-                group={res.groups.find(group => group.id === post.from_id)}
-              />
-            );
-          })
-        });
+                });
+              }
+              return (
+                <Post
+                  key={post.id}
+                  data={post}
+                  sources={sources}
+                  user={res.profiles.find(user => user.id === post.from_id)}
+                  group={res.groups.find(group => group.id === post.from_id)}
+                />
+              );
+            })
+          });
+        }
       });
   }
 

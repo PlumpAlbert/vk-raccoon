@@ -112,3 +112,19 @@
   line-height: 1.2;
   margin: 0;
 }
+
+.private-wall {
+  display: inline-block;
+  margin: auto;
+  text-align: center;
+  padding-bottom: 75px;
+  font-size: 12px;
+}
+
+.private-wall > img {
+  width: 300px;
+}
+
+.private-wall > h1 {
+  margin: 0;
+}
