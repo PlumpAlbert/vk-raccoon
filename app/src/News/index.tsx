@@ -1,29 +1,36 @@
 import * as React from 'react'
 import API from '../API';
 import { Filter, IPostNews } from '../API/newsfeed/types';
-import Post from '../Post/Post';
+import Post, { IProps as PostProps } from '../Post/Post';
 import { IGroup, IUser } from '../API/objects';
 import { Log, errorLog, infoLog } from '../logging';
 import './news.css'
 
 interface IProps {
   token: string;
+  /** Количество постов, отображающихся одновременно */
+  post_count: number;
+  /** Количество постов, подгружаемых во время просмотра новостей */
+  update_count: number;
 }
+
 interface IState {
   start: boolean;
   end: boolean;
   fetching: boolean;
   start_from: string;
+  prev_start: number[];
   posts: JSX.Element[];
 }
 
 export default class NewsFeed extends React.Component<IProps, IState> {
+
   constructor(props: IProps) {
     super(props);
     API.newsfeed.get({
       token: props.token,
       filters: Filter.post,
-      count: 50,
+      count: this.props.post_count,
       fields: [
         'first_name',
         'last_name',
@@ -80,27 +87,34 @@ export default class NewsFeed extends React.Component<IProps, IState> {
       start: false,
       end: false,
       start_from: '',
+      prev_start: [],
       posts: [],
       fetching: true
     };
     log("Created new instance");
   }
+
   shouldComponentUpdate = (nextProps: IProps, nextState: IState) => {
     if (nextState.fetching !== this.state.fetching) {
       for (let key in nextState) {
         if (key !== 'fetching' && (nextState as any)[key] !== (this.state as any)[key]) {
-          info(`Component should update! Property changed ${key}`);
+          info(`Component should update! Property changed: ${key}`);
           return true;
         }
       }
       return false;
     }
     if (this.state.posts.some((v, i) => v.key !== nextState.posts[i].key)) {
-      info('Component should update!', nextState, this.state);
+      info(
+        'Component should update!',
+        '\nnextState: ', nextState,
+        '\nprevState: ', this.state
+      );
       return true;
     }
     return false;
-  }
+  };
+
   onScroll = async (e: React.UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
     const scrolled = target.scrollTop + target.clientHeight;
@@ -108,18 +122,19 @@ export default class NewsFeed extends React.Component<IProps, IState> {
     for (let i = 1; i < 3; i++)
       delta += target.children[target.children.length - i].clientHeight;
     const maxScroll = target.scrollHeight - delta;
+    // At the end of the newsfeed
     if (
       !this.state.fetching
       && !this.state.end
       && scrolled > maxScroll
     ) {
-      this.setState({ fetching: true });
+      this.setState({fetching: true});
       log('Fetching new posts');
       API.newsfeed.get({
         token: this.props.token,
         start_from: this.state.start_from,
         filters: Filter.post,
-        count: 10,
+        count: this.props.update_count,
         fields: [
           'first_name',
           'last_name',
@@ -132,6 +147,10 @@ export default class NewsFeed extends React.Component<IProps, IState> {
           start: false,
           end: res.items.length === 0,
           start_from: res.next_from,
+          prev_start: [
+            ...this.state.prev_start,
+            (this.state.posts[0].props as PostProps).data.date
+          ],
           posts: [
             ...this.state.posts.slice(res.items.length),
             ...res.items.map<JSX.Element>(p => {
@@ -178,33 +197,41 @@ export default class NewsFeed extends React.Component<IProps, IState> {
     delta = 0;
     for (let i = 0; i < 2; i++)
       delta += target.children[i].clientHeight;
+    // At the start of the newsfeed
     if (
       !this.state.fetching
       && !this.state.start
       && target.scrollTop < delta
     ) {
-      // TODO - Fetch previous posts
-      this.setState({ fetching: true });
+      // TODO - fetch previous posts
+      this.setState({fetching: true});
       log('Fetching previous posts');
       API.newsfeed.get({
         token: this.props.token,
-        end_time: this.state.posts[0].props.data.date,
+        start_time: (this.state.posts[0].props as PostProps).data.date,
+        end_time: this.state.prev_start[this.state.prev_start.length - 1],
         filters: Filter.post,
-        count: 10,
+        count: this.props.update_count,
         fields: [
           'first_name',
           'last_name',
           'name',
           'photo_100'
         ]
-      }).then(res => {
-        log('Fetching done!');
-        this.setState({
-          start: res.items.length === 0,
-          end: false,
-          start_from: res.next_from,
-          posts: [
-            ...res.items.map<JSX.Element>(p => {
+      })
+        .then(res => {
+          log('Fetching done!');
+          if (res.items.length === 0) {
+            this.setState({start: true});
+            return;
+          }
+          target.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+          this.setState({
+            start: false,
+            end: false,
+            start_from: res.next_from,
+            prev_start: this.state.prev_start.slice(0, this.state.prev_start.length - 2),
+            posts: res.items.map<JSX.Element>(p => {
               let post = p as IPostNews;
               let sources: any[] = [];
               if (post.copy_history) {
@@ -240,16 +267,18 @@ export default class NewsFeed extends React.Component<IProps, IState> {
                   group={res.groups.find(group => group.id === -post.source_id)}
                 />
               );
-            }),
-            ...this.state.posts.slice(0, this.state.posts.length - res.items.length)
-          ]
+            })
+          })
         })
-      })
     }
-  }
+  };
+
   componentDidUpdate = () => {
-    this.setState({ fetching: false });
-  }
+    setTimeout(
+      () => this.setState({fetching: false}),
+      3000,
+    );
+  };
   render = () => {
     if (this.state.posts.length < 0) return null;
     return (
