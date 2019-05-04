@@ -1,9 +1,9 @@
 .side-menu {
   position: fixed;
-  background: hsl(0, 0%, 95%);
-  color: hsl(0, 0%, 20%);
+  background: hsl(0, 0%, 24%);
+  color: hsl(0, 0%, 95%);
   height: inherit;
-  width: 140px;
+  width: 240px;
   z-index: 1;
   overflow-x: hidden;
   transition: .15s ease-in;
@@ -20,7 +20,7 @@
   font-family: "Google Sans";
   box-sizing: border-box;
   align-items: center;
-  padding: 12px 20px 12px 8px;
+  padding: 12px 24px;
   font-style: normal;
 }
 
@@ -30,13 +30,13 @@
 }
 
 .menu-entry-icon:before {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .menu-entry-text {
-  font-size: 12px;
+  font-size: 14px;
   text-align: left;
-  padding: 4px 0 4px 8px;
+  padding: 4px 0 0 8px;
 }
 
 .menu-entry:hover {
@@ -47,6 +47,6 @@
 
 .active {
   transition: all .1s ease-in;
-  background: hsl(0, 0%, 50%);
-  color: white;
+  background: hsl(0, 0%, 18%);
+  color: hsl(0, 0%, 95%);
 }
