@@ -1,3 +1,5 @@
+import { IPhoto } from "./photo";
+
 /** Пол */
 export enum Sex {
   /** Не указано */
@@ -240,9 +242,8 @@ export interface ICroppedPhoto {
   /**
    * Объект фотографии пользователя,
    * из которой вырезается главное фото профиля
-   * TODO: add IPhoto interface
    */
-  photo: object;
+  photo: IPhoto;
   /** Вырезанная фотография пользователя */
   crop: ICrop;
   rect: ICrop;
